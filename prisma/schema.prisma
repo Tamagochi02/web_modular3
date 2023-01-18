@@ -1,0 +1,163 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id              String            @id @default(uuid())
+  nombre          String            @db.VarChar(100)
+  correo          String            @db.VarChar(100)
+  rol             Rol
+  foto            String?           @db.Text
+  estaActivo      Boolean
+  contrasena      String            @db.VarChar(100)
+  creadoEn        DateTime
+  ActualizadoEn   DateTime
+  Matricula       Matricula[]
+  proyectoAlumnos proyectoAlumnos[]
+  proyectoDocente proyectoDocente[]
+}
+
+enum Rol {
+  Alumno
+  Docente
+  Administrador
+}
+
+model Matricula {
+  id        String  @id @default(uuid())
+  usuario   Usuario @relation(fields: [usuarioId], references: [id])
+  usuarioId String
+  matricula String  @db.VarChar(255)
+}
+
+model Proyecto {
+  id              String            @id @default(uuid())
+  nombre          String            @db.VarChar(255)
+  estado          Estado            @default(Sin_Entregar)
+  modulo          Modulo
+  evaluacion      Evaluacion        @default(Sin_evaluar)
+  creadoEn        DateTime
+  ActualizadoEn   DateTime
+  proyectoAlumnos proyectoAlumnos[]
+  proyectoDocente proyectoDocente[]
+  proyectoDocu    proyectoDocu[]
+}
+
+enum Estado {
+  Sin_Entregar
+  Entregado
+  Debe_modificarse
+  Revisado
+  Modificado
+}
+
+enum Modulo {
+  Modulo_1
+  Modulo_2
+  Modulo_3
+}
+
+enum Evaluacion {
+  Acreditado
+  No_acreditado
+  Sin_evaluar
+}
+
+model Documento {
+  id                   String                 @id @default(uuid())
+  nombre               String                 @db.VarChar(255)
+  titulo               String                 @db.VarChar(255)
+  tipo                 Tipo
+  creadoEn             DateTime
+  ActualizadoEn        DateTime
+  docEtapa1            DocEtapa1[]
+  docEtapa2            DocEtapa2[]
+  docEtapa3            DocEtapa3[]
+  documentoObservacion documentoObservacion[]
+  proyectoDocu         proyectoDocu[]
+}
+
+enum Tipo {
+  etapa1
+  etapa2
+  etapa3
+}
+
+model DocEtapa1 {
+  id            String    @id @default(uuid())
+  documento     Documento @relation(fields: [documentoId], references: [id])
+  documentoId   String
+  resumen       String
+  palabrasClave String
+  introduccion  String
+  desarrollo    String
+  conclusion    String
+  referencias   String
+}
+
+model DocEtapa2 {
+  id           String    @id @default(uuid())
+  documento    Documento @relation(fields: [documentoId], references: [id])
+  documentoId  String
+  descripcion  String
+  objGeneral   String
+  objsMetas    String
+  alcance      String
+  herramientas String
+}
+
+model DocEtapa3 {
+  id          String    @id @default(uuid())
+  documento   Documento @relation(fields: [documentoId], references: [id])
+  documentoId String
+  url         String
+}
+
+model Observacion {
+  id                   String                 @id @default(uuid())
+  observacion          String?                @default("Sin observaciones") @db.VarChar(500)
+  usuarioID            String
+  creadoEn             DateTime
+  ActualizadoEn        DateTime
+  documentoObservacion documentoObservacion[]
+}
+
+model documentoObservacion {
+  id            String      @id @default(uuid())
+  documento     Documento   @relation(fields: [documentoId], references: [id])
+  documentoId   String
+  observacion   Observacion @relation(fields: [observacionId], references: [id])
+  observacionId String
+}
+
+model proyectoAlumnos {
+  id         String   @id @default(uuid())
+  usuario    Usuario  @relation(fields: [usuarioId], references: [id])
+  usuarioId  String
+  proyecto   Proyecto @relation(fields: [proyectoId], references: [id])
+  proyectoId String
+}
+
+model proyectoDocente {
+  id         String   @id @default(uuid())
+  usuario    Usuario  @relation(fields: [usuarioId], references: [id])
+  usuarioId  String
+  proyecto   Proyecto @relation(fields: [proyectoId], references: [id])
+  proyectoId String
+}
+
+model proyectoDocu {
+  id          String    @id @default(uuid())
+  documento   Documento @relation(fields: [documentoId], references: [id])
+  documentoId String
+  proyecto    Proyecto  @relation(fields: [proyectoId], references: [id])
+  proyectoId  String
+}
