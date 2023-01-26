@@ -86,9 +86,9 @@ model Documento {
 }
 
 enum Tipo {
-  etapa1
-  etapa2
-  etapa3
+  etapa_1
+  etapa_2
+  etapa_3
 }
 
 model DocEtapa1 {
