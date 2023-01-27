@@ -20,7 +20,7 @@ model Usuario {
   contrasena      String            @db.VarChar(100)
   creadoEn        DateTime
   ActualizadoEn   DateTime
-  Matricula       Matricula[]
+  Matricula       Matricula?
   proyectoAlumnos proyectoAlumnos[]
   proyectoDocente proyectoDocente[]
 }
@@ -34,7 +34,7 @@ enum Rol {
 model Matricula {
   id        String  @id @default(uuid())
   usuario   Usuario @relation(fields: [usuarioId], references: [id])
-  usuarioId String
+  usuarioId String  @unique
   matricula String  @db.VarChar(255)
 }
 
