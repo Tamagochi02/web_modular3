@@ -2,7 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  // "provider" define qué Prisma Client (específico del idioma) se crea:
+  provider = "prisma-client-js" // "prisma-client-js" generador para el Cliente JavaScript de Prisma
 }
 
 datasource db {
@@ -16,10 +17,10 @@ model Usuario {
   correo          String            @db.VarChar(100)
   rol             Rol
   foto            String?           @db.Text
-  estaActivo      Boolean
+  estaActivo      Boolean           @default(true)
   contrasena      String            @db.VarChar(100)
-  creadoEn        DateTime
-  ActualizadoEn   DateTime
+  creadoEn        DateTime          @default(now())
+  ActualizadoEn   DateTime          @updatedAt
   Matricula       Matricula?
   proyectoAlumnos proyectoAlumnos[]
   proyectoDocente proyectoDocente[]
@@ -44,8 +45,8 @@ model Proyecto {
   estado          Estado            @default(Sin_Entregar)
   modulo          Modulo
   evaluacion      Evaluacion        @default(Sin_evaluar)
-  creadoEn        DateTime
-  ActualizadoEn   DateTime
+  creadoEn        DateTime          @default(now())
+  ActualizadoEn   DateTime          @updatedAt
   proyectoAlumnos proyectoAlumnos[]
   proyectoDocente proyectoDocente[]
   proyectoDocu    proyectoDocu[]
@@ -76,8 +77,8 @@ model Documento {
   nombre               String                 @db.VarChar(255)
   titulo               String                 @db.VarChar(255)
   tipo                 Tipo
-  creadoEn             DateTime
-  ActualizadoEn        DateTime
+  creadoEn             DateTime               @default(now())
+  ActualizadoEn        DateTime               @updatedAt
   docEtapa1            DocEtapa1[]
   docEtapa2            DocEtapa2[]
   docEtapa3            DocEtapa3[]
@@ -125,8 +126,8 @@ model Observacion {
   id                   String                 @id @default(uuid())
   observacion          String?                @default("Sin observaciones") @db.VarChar(500)
   usuarioID            String
-  creadoEn             DateTime
-  ActualizadoEn        DateTime
+  creadoEn             DateTime               @default(now())
+  ActualizadoEn        DateTime               @updatedAt
   documentoObservacion documentoObservacion[]
 }
 
