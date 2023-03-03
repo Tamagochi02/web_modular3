@@ -14,18 +14,31 @@ export const post = async (req, res) => {
     const {
         nombre, correo, contrasena, matricula
     } = req.body
-    const user = await prisma.Usuario.create({
+    const user = await prisma.Usuario.create({ // Crea el usuario sin matricula
         data: {
             rol: "Alumno",
             nombre, correo, contrasena,
-            matricula:{
-                connect: {
-                    matricula: matricula
-                }
-            },
         }
     })
-    res.json(user)
+    const matriculaCreated = await prisma.Matricula.create({ // Crea la matricula conectandola a un usuario existente
+        data: {
+            matricula, 
+            usuario:{
+                connect:{
+                    id: user.id
+                }
+            }
+        }
+    })
+    const userWithMatricula = await prisma.Usuario.findUnique({ // Muestra el usuario
+        where: {
+            id: user.id
+        },
+        include:{
+            Matricula: true
+        }
+    })
+    res.json(userWithMatricula)
 }
 
 // Actualizar un registro:
