@@ -7,10 +7,11 @@ function alumno(req, res) {
         case 'GET':
             get(req, res)
             break;
+
         case 'POST':
             post(req, res)
             break;
-
+            
         case 'PUT':
             put(req, res)
             break;
@@ -21,4 +22,4 @@ function alumno(req, res) {
     }
 }
 
-export default privateRoute(alumno) // funcion para asignar ruta privada enviando un handler, en este caso alumno
+export default privateRoute(alumno, "POST") // funcion para asignar ruta privada enviando un handler, en este caso alumno
