@@ -20,4 +20,4 @@ function docente(req, res) {
     }
 }
 
-export default privateRoute(docente) // funcion para asignar ruta privada enviando un handler
+export default privateRoute(docente, "POST") // funcion para asignar ruta privada enviando un handler
