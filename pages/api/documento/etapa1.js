@@ -1,7 +1,7 @@
 import {get,post,put} from "./../../../backend/controllers/etapa1Controller"
 
 // Funcion CRUD que conecta al controlador de etapa 1:
-function alumno(req, res) {
+export default function etapa1(req, res) {
     switch (req.method) {
         case 'GET':
             get(req, res)
