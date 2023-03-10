@@ -22,8 +22,8 @@ model Usuario {
   creadoEn        DateTime          @default(now())
   ActualizadoEn   DateTime          @updatedAt
   Matricula       Matricula?
-  proyectoAlumnos proyectoAlumnos[]
-  proyectoDocente proyectoDocente[]
+  proyectoAlumnos ProyectoAlumnos[]
+  proyectoDocente ProyectoDocente[]
 }
 
 enum Rol {
@@ -41,19 +41,18 @@ model Matricula {
 
 model Proyecto {
   id              String            @id @default(uuid())
-  nombre          String            @db.VarChar(255)
-  estado          Estado            @default(Sin_Entregar)
+  nombre          String            @db.VarChar(200)
+  estado          Estado            @default(Entregado)
   modulo          Modulo
   evaluacion      Evaluacion        @default(Sin_evaluar)
   creadoEn        DateTime          @default(now())
   ActualizadoEn   DateTime          @updatedAt
-  proyectoAlumnos proyectoAlumnos[]
-  proyectoDocente proyectoDocente[]
-  proyectoDocu    proyectoDocu[]
+  proyectoAlumnos ProyectoAlumnos[]
+  proyectoDocente ProyectoDocente[]
+  proyectoDocu    ProyectoDocu[]
 }
 
 enum Estado {
-  Sin_Entregar
   Entregado
   Debe_modificarse
   Revisado
@@ -82,8 +81,8 @@ model Documento {
   docEtapa1            DocEtapa1[]
   docEtapa2            DocEtapa2[]
   docEtapa3            DocEtapa3[]
-  documentoObservacion documentoObservacion[]
-  proyectoDocu         proyectoDocu[]
+  documentoObservacion DocumentoObservacion[]
+  proyectoDocu         ProyectoDocu[]
 }
 
 enum Tipo {
@@ -128,10 +127,10 @@ model Observacion {
   usuarioID            String
   creadoEn             DateTime               @default(now())
   ActualizadoEn        DateTime               @updatedAt
-  documentoObservacion documentoObservacion[]
+  documentoObservacion DocumentoObservacion[]
 }
 
-model documentoObservacion {
+model DocumentoObservacion {
   id            String      @id @default(uuid())
   documento     Documento   @relation(fields: [documentoId], references: [id])
   documentoId   String
@@ -139,7 +138,7 @@ model documentoObservacion {
   observacionId String
 }
 
-model proyectoAlumnos {
+model ProyectoAlumnos {
   id         String   @id @default(uuid())
   usuario    Usuario  @relation(fields: [usuarioId], references: [id])
   usuarioId  String
@@ -147,7 +146,7 @@ model proyectoAlumnos {
   proyectoId String
 }
 
-model proyectoDocente {
+model ProyectoDocente {
   id         String   @id @default(uuid())
   usuario    Usuario  @relation(fields: [usuarioId], references: [id])
   usuarioId  String
@@ -155,7 +154,7 @@ model proyectoDocente {
   proyectoId String
 }
 
-model proyectoDocu {
+model ProyectoDocu {
   id          String    @id @default(uuid())
   documento   Documento @relation(fields: [documentoId], references: [id])
   documentoId String
