@@ -34,7 +34,7 @@ export const post = async (req, res) => {
         where: {
             id: user.id
         },
-        include:{
+        include:{ // para incluir registros relacionados
             Matricula: true
         }
     })
