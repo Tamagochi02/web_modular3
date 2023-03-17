@@ -2,7 +2,7 @@ import { prisma } from "../../lib/prisma" // Importa prisma client para enviar p
 
 // Obtener proyectos:
 export const get = async (req, res) => {
-    const proyectos = await prisma.Usuario.findMany()
+    const proyectos = await prisma.Proyecto.findMany()
     res.json(proyectos)
 }
 

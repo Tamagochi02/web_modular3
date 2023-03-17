@@ -29,14 +29,9 @@ export const put = async (req, res) => {
         nombre, correo, contrasena,
         foto, estaActivo, ActualizadoEn, id, docenteId
     } = req.body // Info que obtendrá del body
-    const user = await prisma.alumno.update({
+    const user = await prisma.Usuario.update({
         data: {
             nombre, correo, contrasena, foto, estaActivo, ActualizadoEn
-            /* proyectoDocente:{
-                connect:{
-                    usuarioId: docenteId
-                }
-            } */
         },
         where: {
             id
