@@ -15,7 +15,7 @@ export const post = async (req, res) => {
         observacion
     } = req.body
 
-    const obs = await prisma.DocEtapa1.create({
+    const obs = await prisma.Observacion.create({
         data: {
             observacion
         }
@@ -29,7 +29,7 @@ export const put = async (req, res) => {
     const {
         observacion
     } = req.body // Info que obtendrá del body
-    const obs = await prisma.alumno.update({
+    const obs = await prisma.Observacion.update({
         data: {
             observacion
         },

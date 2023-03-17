@@ -6,7 +6,7 @@ export const get = async (req, res) => {
     res.json(etapa3)
 }
 
-// Crear un etapa 3:
+// Crear una etapa 3:
 export const post = async (req, res) => {
     const {
         url
@@ -19,4 +19,20 @@ export const post = async (req, res) => {
     })
 
     res.json(etapa3)
+}
+
+// Actualizar etapa 3:
+export const put = async (req, res) => {
+    const {
+        url
+    } = req.body // Info que obtendrá del body
+    const obs = await prisma.DocEtapa3.update({
+        data: {
+            url
+        },
+        where: {
+            id
+        }
+    })
+    res.json(obs)
 }
