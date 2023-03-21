@@ -9,12 +9,30 @@ export const get = async (req, res) => {
 // Crear un etapa 1:
 export const post = async (req, res) => {
     const {
-        resumen, palabrasClave, introduccion, desarrollo, conclusion, referencias
+        resumen, palabrasClave, introduccion, desarrollo, conclusion, referencias, documentoId
     } = req.body
+
+    // Validar si existe un documento con la id que le pasemos del body:
+    try {
+        await prisma.Documento.findUniqueOrThrow({
+            where: {
+                id: documentoId
+            }
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(401).json({"message":`Document with id ${documentoId} not found`})
+    }
+
 
     const etapa1 = await prisma.DocEtapa1.create({
         data: {
-            resumen, palabrasClave, introduccion, desarrollo, conclusion, referencias
+            resumen, palabrasClave, introduccion, desarrollo, conclusion, referencias,
+            documento: { // Al crear una etapa1 hace la conexión con un documento (Debe estar ya creado)
+                connect: {
+                    id: documentoId
+                }
+            }
         }
     })
 
