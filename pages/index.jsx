@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 
 const LogIn = () => {
   //useState retorna dos variables dentro de un arreglo
-  const [usuario, setUsuario] = useState("");
+  const [users, setUsuario] = useState("");
   const [contrasenia, setContrasenia] = useState("");
   const router = useRouter()
   const onChange = ({ currentTarget }) => setContrasenia(currentTarget.value);
@@ -15,7 +15,7 @@ const LogIn = () => {
     eventForm.preventDefault(); // evitar que refresh en la pagina al darle click al boton y no se pierden la coockies ni el inicio de sesión
 
     const payload = {
-      correo: usuario + "@universidad-une.com",
+      correo: users + "@universidad-une.com",
       contrasena: contrasenia,
     };
 
@@ -61,7 +61,7 @@ const LogIn = () => {
                     <p className="">
                       <input
                         type="text"
-                        value={usuario}
+                        value={users}
                         onChange={(eventInput) => setUsuario(eventInput.target.value)}
                         placeholder="Matrícula"
                       ></input>{" "}

@@ -9,7 +9,7 @@ const LogIn = () => {
   const [contrasenia, setContrasenia] = useState("");
   const router = useRouter()
   const onChange = ({ currentTarget }) => setContrasenia(currentTarget.value);
-  
+
   const onSubmitLoginForm = (eventForm) => {
     // Funcion para la accion del boton
     eventForm.preventDefault(); // evitar que refresh en la pagina al darle click al boton y no se pierden la coockies ni el inicio de sesión
@@ -36,7 +36,7 @@ const LogIn = () => {
       })
       .catch((error) => console.log(error))
   };
- 
+
   return (
     <div className="flex flex-col w-screen h-screen">
       <div className="flex flex-grow">
@@ -58,7 +58,7 @@ const LogIn = () => {
                 <input
                   type="text"
                   value={usuario}
-                  onChange={(eventInput) => setUsuario(eventInput.target.value)} 
+                  onChange={(eventInput) => setUsuario(eventInput.target.value)}
                   placeholder="Matrícula"
                 ></input>{" "}
                 <span className=" text-white">
@@ -88,9 +88,13 @@ const LogIn = () => {
                     setContrasenia(eventInput.target.value)
                   } placeholder="******"
                 ></input>{" "}
-                <span className="material-icons-outlined text-white">
-                  visibility
-                </span>
+                <button className="material-icons text-white" onClick={() => setShowPassword(!showPassword)}>
+                  {!showPassword ? <span className="material-icons-outlined md-light text-white text-3xl">
+                    visibility
+                  </span> : <span className="material-icons md-light md-inactive text-white text-3xl">
+                    visibility_off
+                  </span>}
+                </button>
               </p>
 
               <div className=" flex pt-7 pl-24">
