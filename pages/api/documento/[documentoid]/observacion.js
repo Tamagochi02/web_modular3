@@ -1,6 +1,6 @@
-import {get,post,put} from "./../../../backend/controllers/observacionController"
+import {get,post,put} from "../../../../backend/controllers/observacionController"
 
-// Funcion CRUD que conecta al controlador de etapa 1:
+// Funcion CRUD que conecta al controlador de observacion:
 export default function observacion(req, res) {
     switch (req.method) {
         case 'GET':
