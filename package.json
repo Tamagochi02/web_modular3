@@ -12,7 +12,6 @@
   "dependencies": {
     "@prisma/client": "^4.9.0",
     "dayjs": "^1.11.6",
-    "ibm-watson": "^7.0.0",
     "iron-session": "^6.3.1",
     "material-icons": "^1.13.3",
     "next": "13.0.1",
