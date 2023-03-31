@@ -1,9 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-  // "provider" define qué Prisma Client (específico del idioma) se crea:
-  provider = "prisma-client-js" // "prisma-client-js" generador para el Cliente JavaScript de Prisma
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -12,18 +8,18 @@ datasource db {
 }
 
 model Usuario {
-  id              String            @id @default(uuid())
-  nombre          String            @db.VarChar(100)
-  correo          String            @db.VarChar(100)
-  rol             Rol
-  foto            String?           @db.Text
-  estaActivo      Boolean           @default(true)
-  contrasena      String            @db.VarChar(100)
-  creadoEn        DateTime          @default(now())
-  ActualizadoEn   DateTime          @updatedAt
-  Matricula       Matricula?
-  proyectoAlumnos ProyectoAlumnos[]
-  proyectoDocente ProyectoDocente[]
+  id            String              @id @default(uuid())
+  nombre        String              @db.VarChar(100)
+  correo        String              @db.VarChar(100) @unique
+  rol           Rol
+  foto          String?             @db.Text
+  estaActivo    Boolean             @default(true)
+  contrasena    String              @db.VarChar(100)
+  creadoEn      DateTime            @default(now())
+  actualizadoEn DateTime            @updatedAt
+  matricula     Matricula?
+  observaciones Observacion[]
+  proyectos     ProyectosUsuarios[]
 }
 
 enum Rol {
@@ -37,19 +33,6 @@ model Matricula {
   usuario   Usuario @relation(fields: [usuarioId], references: [id])
   usuarioId String  @unique
   matricula String  @db.VarChar(255)
-}
-
-model Proyecto {
-  id              String            @id @default(uuid())
-  nombre          String            @db.VarChar(200)
-  estado          Estado            @default(Entregado)
-  modulo          Modulo
-  evaluacion      Evaluacion        @default(Sin_evaluar)
-  creadoEn        DateTime          @default(now())
-  ActualizadoEn   DateTime          @updatedAt
-  proyectoAlumnos ProyectoAlumnos[]
-  proyectoDocente ProyectoDocente[]
-  proyectoDocu    ProyectoDocu[]
 }
 
 enum Estado {
@@ -71,21 +54,34 @@ enum Evaluacion {
   Sin_evaluar
 }
 
-model Documento {
-  id                   String                 @id @default(uuid())
-  nombre               String                 @db.VarChar(255)
-  titulo               String                 @db.VarChar(255)
-  tipo                 Tipo
-  creadoEn             DateTime               @default(now())
-  ActualizadoEn        DateTime               @updatedAt
-  docEtapa1            DocEtapa1[]
-  docEtapa2            DocEtapa2[]
-  docEtapa3            DocEtapa3[]
-  documentoObservacion DocumentoObservacion[]
-  proyectoDocu         ProyectoDocu[]
+model Proyecto {
+  id            String              @id @default(uuid())
+  nombre        String              @db.VarChar(200)
+  estado        Estado              @default(Entregado)
+  modulo        Modulo
+  evaluacion    Evaluacion          @default(Sin_evaluar)
+  creadoEn      DateTime            @default(now())
+  actualizadoEn DateTime            @updatedAt
+  usuarios      ProyectosUsuarios[]
+  documentos    Documento[]
 }
 
-enum Tipo {
+model Documento {
+  id            String        @id @default(uuid())
+  nombre        String        @db.VarChar(255)
+  titulo        String        @db.VarChar(255)
+  etapa         Etapa
+  creadoEn      DateTime      @default(now())
+  actualizadoEn DateTime      @updatedAt
+  observaciones Observacion[]
+  proyecto      Proyecto      @relation(fields: [proyectoId], references: [id])
+  proyectoId    String
+  DocEtapa1     DocEtapa1[]
+  DocEtapa2     DocEtapa2[]
+  DocEtapa3     DocEtapa3[]
+}
+
+enum Etapa {
   etapa_1
   etapa_2
   etapa_3
@@ -122,42 +118,21 @@ model DocEtapa3 {
 }
 
 model Observacion {
-  id                   String                 @id @default(uuid())
-  observacion          String?                @default("Sin observaciones") @db.VarChar(500)
-  usuarioID            String
-  creadoEn             DateTime               @default(now())
-  ActualizadoEn        DateTime               @updatedAt
-  documentoObservacion DocumentoObservacion[]
-}
-
-model DocumentoObservacion {
-  id            String      @id @default(uuid())
-  documento     Documento   @relation(fields: [documentoId], references: [id])
+  id            String    @id @default(uuid())
+  observacion   String    @db.VarChar(500)
+  creadoEn      DateTime  @default(now())
+  actualizadoEn DateTime  @updatedAt
+  usuario       Usuario   @relation(fields: [usuarioId], references: [id])
+  usuarioId     String
+  documento     Documento @relation(fields: [documentoId], references: [id])
   documentoId   String
-  observacion   Observacion @relation(fields: [observacionId], references: [id])
-  observacionId String
 }
 
-model ProyectoAlumnos {
-  id         String   @id @default(uuid())
+model ProyectosUsuarios {
   usuario    Usuario  @relation(fields: [usuarioId], references: [id])
   usuarioId  String
   proyecto   Proyecto @relation(fields: [proyectoId], references: [id])
   proyectoId String
-}
 
-model ProyectoDocente {
-  id         String   @id @default(uuid())
-  usuario    Usuario  @relation(fields: [usuarioId], references: [id])
-  usuarioId  String
-  proyecto   Proyecto @relation(fields: [proyectoId], references: [id])
-  proyectoId String
-}
-
-model ProyectoDocu {
-  id          String    @id @default(uuid())
-  documento   Documento @relation(fields: [documentoId], references: [id])
-  documentoId String
-  proyecto    Proyecto  @relation(fields: [proyectoId], references: [id])
-  proyectoId  String
+  @@id([usuarioId, proyectoId])
 }
