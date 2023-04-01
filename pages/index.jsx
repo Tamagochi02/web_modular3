@@ -58,7 +58,7 @@ export const getServerSideProps = privatePage((context) => {
     case Rol.Alumno:
       return {
         redirect: {
-          destination: "/alumnos/dashboard.jsx",
+          destination: "/alumnos/dashboard",
           permanent: false,
         },
       };
