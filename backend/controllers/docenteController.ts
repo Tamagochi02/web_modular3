@@ -25,11 +25,11 @@ export const createDocente: NextApiHandler = async (req, res) => {
 export const updateDocente: NextApiHandler = async (req, res) => {
     const {
         nombre, correo, contrasena,
-        foto, estaActivo, ActualizadoEn, id, docenteId
+        foto, estaActivo, id, docenteId
     } = req.body
     const user = await prisma.usuario.update({
         data: {
-            nombre, correo, contrasena, foto, estaActivo, ActualizadoEn
+            nombre, correo, contrasena, foto, estaActivo
         },
         where: {
             id
