@@ -1,26 +1,19 @@
-import Link from "next/link";
-import { useState } from "react";
-import { privatePage } from "../lib/ironSessionConfig";
+import { Rol } from "@prisma/client";
 import { useRouter } from 'next/router'
+import { privatePage } from "../lib/ironSessionConfig";
 
-const LogIn = () => {
-  //useState retorna dos variables dentro de un arreglo
-  const [usuario, setUsuario] = useState("");
-  const [contrasenia, setContrasenia] = useState("");
+const Login = () => {
   const router = useRouter()
-  const onChange = ({ currentTarget }) => setContrasenia(currentTarget.value);
 
   const onSubmitLoginForm = (eventForm) => {
-    // Funcion para la accion del boton
-    eventForm.preventDefault(); // evitar que refresh en la pagina al darle click al boton y no se pierden la coockies ni el inicio de sesión
+    eventForm.preventDefault();
+    const data = new FormData(eventForm.target);
 
     const payload = {
-      correo: usuario + "@universidad-une.com",
-      contrasena: contrasenia,
-    };
+      correo: `${data.get('correo')}@universidad-une.com`,
+      contrasena: data.get('contraseña')
+    }
 
-    // FETCH: proporciona una interfaz JavaScript para acceder y 
-    // manipular partes del canal HTTP, tales como peticiones y respuestas.
     fetch("/api/login", {
       method: "POST",
       headers: {
@@ -29,83 +22,28 @@ const LogIn = () => {
       body: JSON.stringify(payload),
     })
       .then((response) => {
-        response.json()
-        if (response.ok) {
-          router.reload() // Recargar la pagina al iniciar sesion
-        }
+        if (response.ok) router.reload()
       })
       .catch((error) => console.log(error))
-  };
-
-  const [showPassword, setShowPassword] = useState(false);
+  }
 
   return (
-    <div className="flex flex-col w-screen h-screen">
-      <div className="flex flex-grow justify-center bg-[url('/gdl.jpg')] bg-cover bg-center bg-fixed" > {/* h-14 bg-gradient-to-r from-blue-300 to-blue-400 */}
-        <header>
-          <div className="flex items-center justify-center font-serif text-left text-xl bg-white">
-            <aside className="justify-center bg-gray-800 font-serif">
-              <div className="flex justify-center bg-gray-800 rounded shadow-xl">
-                <div className="flex flex-col gap-5 p-6 md:p-10 text-center md:text-left">
-                  <div className="flex mr-3 text-4xl pt-24 text-center text-white flex-col">
-                    <p> ¡Bienvenido! </p>
-                    <span className="justify-center material-icons text-9xl">
-                      account_circle
-                    </span>
-                  </div>
-                  <form onSubmit={onSubmitLoginForm} className="pt-20 pl-12 pr-7">
-                    <p className=" text-xl justify-center text-white">
-                      {""}
-                      Correo institucional:{""}
-                    </p>
-                    <p className="">
-                      <input
-                        type="text"
-                        value={usuario}
-                        onChange={(eventInput) => setUsuario(eventInput.target.value)}
-                        placeholder="Matrícula"
-                      ></input>{" "}
-                      <span className=" text-white">
-                        {" "}
-                        @universidad-une.com{" "}
-                      </span>
-                    </p>
-
-                    <p className=" text-xl pt-5 text-white">
-                      {""}
-                      Contraseña:{""}
-                    </p>
-
-                    <p>
-                      <input
-                        type={showPassword ? "text" : "password"}
-                        className="w-80"
-                        value={contrasenia}
-                        onChange={(eventInput) =>
-                          setContrasenia(eventInput.target.value)
-                        } placeholder="******"
-
-                      ></input>{" "}
-                      <button className="material-icons text-white" onClick={() => setShowPassword(!showPassword)}>
-                        {!showPassword ? <span className="material-icons-outlined md-light text-white text-3xl">
-                          visibility
-                        </span> : <span className="material-icons md-light md-inactive text-white text-3xl">
-                          visibility_off
-                        </span>}
-                      </button>
-                    </p>
-
-                    <div className=" flex justify-center pt-5">
-                      <button className=" rounded w-36 h-14 transition bg-white hover:-translate-y-1 hover:scale-110 hover:bg-gray-300 duration-150">
-                        Ingresar
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </aside>
+    <div className="flex w-screen h-screen">
+      <div className="flex-1 bg-blue-500 grid place-content-center">
+        <form onSubmit={onSubmitLoginForm} className="flex flex-col w-[400px] text-white">
+          <h1 className="text-4xl font-bold mb-5">Gestor Modulares</h1>
+          <span>Correo:</span>
+          <div>
+            <input name="correo" type="text" className="bg-blue-500 border border-white px-2 rounded-lg h-10" />
+            <span className="pl-1 font-semibold">@universidad-une.com</span>
           </div>
-        </header>
+          <span>Contraseña:</span>
+          <input name="contraseña" type="password" className="bg-blue-500 border border-white px-2 rounded-lg h-10" />
+          <button type="submit" className="mt-5 text-blue-500 bg-white h-10 rounded-lg">Ingresar</button>
+        </form>
+      </div>
+      <div className="flex-1 grid place-content-center">
+        <img src="organize resume.svg" alt="organize" />
       </div>
     </div>
   );
@@ -113,41 +51,38 @@ const LogIn = () => {
 
 // rutas protegidas
 export const getServerSideProps = privatePage((context) => {
-  const user = context.req.session.user; //si hay un usuario
-  if (user) {
-    switch (context.req.session.role) {
-      case "alumno":
-        return {
-          redirect: {
-            destination: "/dashboard",//cambiar
-            permanent: false,
-          },
-        };
-      case "docente":
-        return {
-          redirect: {
-            destination: "/dashboard_d",
-            permanent: false,
-          },
-        };
-      case "admin":
-        return {
-          redirect: {
-            destination: "/dashboard_a",
-            permanent: false,
-          },
-        };
-      default:
-        return {
-          redirect: {
-            destination: "/api/logout",
-            permanent: false,
-          },
-        };
-    }
+  const user = context.req.session.user;
+  if (!user) return { props: {} }
+  switch (user.rol) {
+    case Rol.Alumno:
+      return {
+        redirect: {
+          destination: "/alumnos/dashboard",
+          permanent: false,
+        },
+      };
+    case Rol.Docente:
+      return {
+        redirect: {
+          destination: "/docentes/dashboard",
+          permanent: false,
+        },
+      };
+    case Rol.Administrador:
+      return {
+        redirect: {
+          destination: "/administradores/dashboard",
+          permanent: false,
+        },
+      };
+    default:
+      return {
+        redirect: {
+          destination: "/api/logout",
+          permanent: false,
+        },
+      }
   }
-  return {
-    props: {},
-  };
-});
-export default LogIn;
+})
+
+export default Login;
