@@ -1,7 +1,10 @@
+import { useRouter } from 'next/router'
 import Layout from "../../../components/layouts/MainLayout";
+import Card from "../../../components/Card";
 import { privatePage } from "../../../lib/ironSessionConfig";
 
 const NuevoProyecto = ({ user }) => {
+    const router = useRouter()
 
     const onSubmitCreateProyectForm = (eventForm) => {
         eventForm.preventDefault();
@@ -19,13 +22,12 @@ const NuevoProyecto = ({ user }) => {
             },
             body: JSON.stringify(payload),
         })
-            .then((response) => response.json())
-            .then(console.log)
+            .then(() => router.push('/alumnos/proyectos'))
             .catch((error) => console.log(error))
     }
 
     return <Layout title='Nuevo Proyecto' user={user} >
-        <div className="bg-white p-5 rounded-lg">
+        <Card>
             <form onSubmit={onSubmitCreateProyectForm} className="flex flex-col w-[400px]">
                 <span>Nombre del proyecto</span>
                 <input name="nombre" type="text" className="border px-2 rounded-lg h-10" />
@@ -37,7 +39,7 @@ const NuevoProyecto = ({ user }) => {
                 </select>
                 <button type="submit" className="mt-5 bg-blue-500 text-white h-10 rounded-lg">Crear</button>
             </form>
-        </div>
+        </Card>
     </Layout>
 };
 

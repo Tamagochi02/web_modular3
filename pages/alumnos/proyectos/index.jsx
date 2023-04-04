@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Layout from "../../../components/layouts/MainLayout";
+import Card from "../../../components/Card";
 import { privatePage } from "../../../lib/ironSessionConfig";
 
 const Proyectos = ({ user }) => {
@@ -14,27 +15,29 @@ const Proyectos = ({ user }) => {
     }, [])
 
     return <Layout title='Proyectos' user={user} >
-        <div className="grid grid-cols-10 gap-5 auto-rows-auto">
-            <Link
-                href={"/alumnos/proyectos/new"}
-                className="aspect-square rounded-md border-2 border-gray-300 grid place-content-center"
-            >
-                <span className="text-gray-300 text-5xl material-icons">
-                    add
-                </span>
-            </Link>
-            {
-                proyects.map(proyecto => <Link
-                    href={"#"}
-                    className="aspect-square rounded-md border-2 border-gray-300"
+        <Card>
+            <div className="grid grid-cols-10 gap-5 auto-rows-auto">
+                <Link
+                    href={"/alumnos/proyectos/new"}
+                    className="aspect-square rounded-md border-2 border-gray-300 grid place-content-center"
                 >
-                    <p>{proyecto.nombre}</p>
-                    <p>{proyecto.modulo}</p>
-                    <p>{proyecto.estado}</p>
-                    <p>{proyecto.evaluacion}</p>
-                </Link>)
-            }
-        </div>
+                    <span className="text-gray-300 text-5xl material-icons">
+                        add
+                    </span>
+                </Link>
+                {
+                    proyects.map(proyecto => <Link
+                        href={`/alumnos/proyectos/${proyecto.id}`}
+                        className="aspect-square rounded-md border-2 border-gray-300"
+                    >
+                        <p>{proyecto.nombre}</p>
+                        <p>{proyecto.modulo}</p>
+                        <p>{proyecto.estado}</p>
+                        <p>{proyecto.evaluacion}</p>
+                    </Link>)
+                }
+            </div>
+        </Card>
     </Layout>
 };
 
