@@ -1,0 +1,262 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "modulares",
+    "dateExported": "2023-04-04T21:37:42.466Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "44f74f9a-8770-4dd0-ba0d-a4f372ff7e2a",
+            "name": "docentes",
+            "containerId": "",
+            "created": "2023-03-31T17:12:00.627Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "c90b7504-2433-4161-bcb8-f31a46bbf7c0",
+            "name": "auth",
+            "containerId": "",
+            "created": "2023-03-31T21:41:06.355Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "bfb635fc-829f-4ead-9eab-61483f19817d",
+            "name": "projects",
+            "containerId": "",
+            "created": "2023-04-04T20:08:03.415Z",
+            "sortNum": 30000
+        },
+        {
+            "_id": "d3c9d0d0-a54b-47ee-ae78-1091fc1757c4",
+            "name": "documents",
+            "containerId": "",
+            "created": "2023-04-04T20:38:21.413Z",
+            "sortNum": 40000
+        },
+        {
+            "_id": "fa87b9f1-48f0-4899-8724-ebdc35dbf233",
+            "name": "observaciones",
+            "containerId": "",
+            "created": "2023-04-04T21:00:03.481Z",
+            "sortNum": 50000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "f808a709-a16e-4ac6-8d1c-041312176809",
+            "colId": "1ff0eaed-06d2-4d66-9ef8-43dbd4815cd1",
+            "containerId": "44f74f9a-8770-4dd0-ba0d-a4f372ff7e2a",
+            "name": "read",
+            "url": "http://localhost:3000/api/docentes",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2023-03-31T17:12:08.654Z",
+            "modified": "2023-03-31T17:29:08.048Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "59bd0ceb-e78e-4543-a7da-5cff72425ee5",
+            "colId": "1ff0eaed-06d2-4d66-9ef8-43dbd4815cd1",
+            "containerId": "44f74f9a-8770-4dd0-ba0d-a4f372ff7e2a",
+            "name": "create",
+            "url": "http://localhost:3000/api/docentes",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2023-03-31T21:34:59.829Z",
+            "modified": "2023-03-31T21:36:34.893Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nombre\": \"uziel cocolan\",\n  \"correo\": \"uziel.cocolan@universidad-une.com\",\n  \"contrasena\": \"uziel200\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "398e00ae-a298-4e8b-ac57-3feff800ad15",
+            "colId": "1ff0eaed-06d2-4d66-9ef8-43dbd4815cd1",
+            "containerId": "c90b7504-2433-4161-bcb8-f31a46bbf7c0",
+            "name": "login",
+            "url": "http://localhost:3000/api/login",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2023-03-31T21:41:11.667Z",
+            "modified": "2023-03-31T21:41:56.399Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"correo\": \"uziel.cocolan@universidad-une.com\",\n  \"contrasena\": \"uziel200\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "febf36fd-f11e-42ca-9b6a-1452520df40a",
+            "colId": "1ff0eaed-06d2-4d66-9ef8-43dbd4815cd1",
+            "containerId": "bfb635fc-829f-4ead-9eab-61483f19817d",
+            "name": "read",
+            "url": "http://localhost:3000/api/projects",
+            "method": "GET",
+            "sortNum": 40000,
+            "created": "2023-04-04T20:08:17.015Z",
+            "modified": "2023-04-04T20:32:47.355Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "bcbb49ff-4480-49b0-8ad7-bf1ec7e847f2",
+            "colId": "1ff0eaed-06d2-4d66-9ef8-43dbd4815cd1",
+            "containerId": "bfb635fc-829f-4ead-9eab-61483f19817d",
+            "name": "create",
+            "url": "http://localhost:3000/api/proyecto",
+            "method": "POST",
+            "sortNum": 50000,
+            "created": "2023-04-04T20:08:49.353Z",
+            "modified": "2023-04-04T20:09:42.877Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nombre\": \"proyecto prueba\",\n  \"modulo\": \"Modulo_1\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "974aef17-af8c-4c4d-bcd6-a6e04ef07c50",
+            "colId": "1ff0eaed-06d2-4d66-9ef8-43dbd4815cd1",
+            "containerId": "bfb635fc-829f-4ead-9eab-61483f19817d",
+            "name": "readByID",
+            "url": "http://localhost:3000/api/projects/67784812-dcc4-453f-b0e7-276927a4478f",
+            "method": "GET",
+            "sortNum": 60000,
+            "created": "2023-04-04T20:32:05.052Z",
+            "modified": "2023-04-04T20:36:34.884Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "946af899-997b-46e8-bc3c-eb9f403d3c93",
+            "colId": "1ff0eaed-06d2-4d66-9ef8-43dbd4815cd1",
+            "containerId": "d3c9d0d0-a54b-47ee-ae78-1091fc1757c4",
+            "name": "read by proyectId",
+            "url": "http://localhost:3000/api/projects/67784812-dcc4-453f-b0e7-276927a4478f/documents",
+            "method": "GET",
+            "sortNum": 70000,
+            "created": "2023-04-04T20:39:05.747Z",
+            "modified": "2023-04-04T20:39:51.466Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "48c7fd0d-2445-43da-88e7-6af6d6f46725",
+            "colId": "1ff0eaed-06d2-4d66-9ef8-43dbd4815cd1",
+            "containerId": "d3c9d0d0-a54b-47ee-ae78-1091fc1757c4",
+            "name": "create document by proyect Id",
+            "url": "http://localhost:3000/api/projects/67784812-dcc4-453f-b0e7-276927a4478f/documents",
+            "method": "POST",
+            "sortNum": 80000,
+            "created": "2023-04-04T20:41:25.495Z",
+            "modified": "2023-04-04T20:42:38.913Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nombre\": \"nombre prueba\",\n  \"titulo\": \"titulo prueba\",\n  \"etapa\": \"etapa_1\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "4d516c62-450e-4804-8937-9412ede65f87",
+            "colId": "1ff0eaed-06d2-4d66-9ef8-43dbd4815cd1",
+            "containerId": "fa87b9f1-48f0-4899-8724-ebdc35dbf233",
+            "name": "read by document id",
+            "url": "http://localhost:3000/api/documents/080438b7-5084-41c9-91ab-16b071851ac0/observaciones",
+            "method": "GET",
+            "sortNum": 90000,
+            "created": "2023-04-04T21:00:10.756Z",
+            "modified": "2023-04-04T21:01:19.838Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "f113415f-2094-4c9d-a6eb-620186146397",
+            "colId": "1ff0eaed-06d2-4d66-9ef8-43dbd4815cd1",
+            "containerId": "fa87b9f1-48f0-4899-8724-ebdc35dbf233",
+            "name": "create",
+            "url": "http://localhost:3000/api/documents/080438b7-5084-41c9-91ab-16b071851ac0/observaciones",
+            "method": "POST",
+            "sortNum": 100000,
+            "created": "2023-04-04T21:00:14.653Z",
+            "modified": "2023-04-04T21:01:50.110Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"observacion\": \"observacion de prueba\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "18acf8a9-d3e2-44d2-9d2a-c588321fb1db",
+            "colId": "1ff0eaed-06d2-4d66-9ef8-43dbd4815cd1",
+            "containerId": "d3c9d0d0-a54b-47ee-ae78-1091fc1757c4",
+            "name": "read by id",
+            "url": "http://localhost:3000/api/documents/080438b7-5084-41c9-91ab-16b071851ac0",
+            "method": "GET",
+            "sortNum": 110000,
+            "created": "2023-04-04T21:26:41.041Z",
+            "modified": "2023-04-04T21:27:04.082Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "71187b0f-4d4d-42f3-a202-11214522603b",
+            "colId": "1ff0eaed-06d2-4d66-9ef8-43dbd4815cd1",
+            "containerId": "d3c9d0d0-a54b-47ee-ae78-1091fc1757c4",
+            "name": "add Etapa 1",
+            "url": "http://localhost:3000/api/documents/080438b7-5084-41c9-91ab-16b071851ac0/etapa1",
+            "method": "POST",
+            "sortNum": 120000,
+            "created": "2023-04-04T21:28:18.203Z",
+            "modified": "2023-04-04T21:33:08.266Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"resumen\": \"resumen test\",\n  \"palabrasClave\": \"palabrasClave test\",\n  \"introduccion\": \"introduccion test\",\n  \"desarrollo\": \"desarrollo test\",\n  \"conclusion\": \"conclusion test\",\n  \"referencias\": \"referencias test\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "c9b4f6c5-713c-4da1-80c4-305f784e1836",
+            "colId": "1ff0eaed-06d2-4d66-9ef8-43dbd4815cd1",
+            "containerId": "d3c9d0d0-a54b-47ee-ae78-1091fc1757c4",
+            "name": "add Etapa 2",
+            "url": "http://localhost:3000/api/documents/080438b7-5084-41c9-91ab-16b071851ac0/etapa2",
+            "method": "POST",
+            "sortNum": 125000,
+            "created": "2023-04-04T21:28:21.745Z",
+            "modified": "2023-04-04T21:36:30.690Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"descripcion\": \"descripcion test\",\n  \"objGeneral\": \"objGeneral test\",\n  \"objsMetas\": \"objsMetas test\",\n  \"alcance\": \"alcance test\",\n  \"herramientas\": \"herramientas test\"\n}",
+                "form": []
+            },
+            "tests": []
+        }
+    ]
+}

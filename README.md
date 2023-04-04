@@ -7,6 +7,9 @@
 - Up development database and run `npx prisma db push`
 - Start `npm run dev`
 
+## Thunder Client
+The api is tested directly in Thunder client by importing [thunder-collection_modulares.json](./lib/thunder-collection_modulares.json)
+
 ## Design inspiration
 
 - https://dribbble.com/shots/18488086-Login-Screen
