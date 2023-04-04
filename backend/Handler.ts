@@ -7,6 +7,8 @@ interface Handlers {
     delete?: NextApiHandler
 }
 
+// Este es el controlador de las turas auxiliar al
+// controlador por default que tiene Next.js
 export class Handler {
     constructor(
         handlers?: Handlers,
