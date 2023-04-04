@@ -4,7 +4,10 @@ import { prisma } from "../../lib/prisma"
 
 export const readAlumnos: NextApiHandler = async (_req, res) => {
     const users = await prisma.usuario.findMany({
-        where: { rol: Rol.Alumno }
+        where: {
+            estaActivo: true,
+            rol: Rol.Alumno
+        }
     })
     res.json(users)
 }
@@ -19,7 +22,7 @@ export const createAlumno: NextApiHandler = async (req, res) => {
             nombre, correo, contrasena,
         }
     })
-    const matriculaCreated = await prisma.matricula.create({
+    await prisma.matricula.create({
         data: {
             matricula,
             usuario: {
@@ -34,7 +37,7 @@ export const createAlumno: NextApiHandler = async (req, res) => {
             id: user.id
         },
         include: {
-            Matricula: true
+            matricula: true
         }
     })
     res.json(userWithMatricula)
@@ -43,21 +46,11 @@ export const createAlumno: NextApiHandler = async (req, res) => {
 export const updateAlumno: NextApiHandler = async (req, res) => {
     const {
         nombre, correo, contrasena, matricula,
-        foto, estaActivo, ActualizadoEn, id, proyectoAlumnoId, docenteId
+        foto, estaActivo, id
     } = req.body
     const user = await prisma.usuario.update({
         data: {
-            nombre, correo, contrasena, foto, Matricula: matricula, estaActivo, ActualizadoEn,
-            proyectoAlumnos: {
-                connect: {
-                    id: proyectoAlumnoId
-                }
-            },
-            proyectoDocente: {
-                connect: {
-                    id: docenteId
-                }
-            }
+            nombre, correo, contrasena, foto, matricula, estaActivo
         },
         where: {
             id
