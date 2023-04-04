@@ -53,7 +53,6 @@ const Login = () => {
 export const getServerSideProps = privatePage((context) => {
   const user = context.req.session.user;
   if (!user) return { props: {} }
-
   switch (user.rol) {
     case Rol.Alumno:
       return {
@@ -65,14 +64,14 @@ export const getServerSideProps = privatePage((context) => {
     case Rol.Docente:
       return {
         redirect: {
-          destination: "/dashboard_d",
+          destination: "/docentes/dashboard",
           permanent: false,
         },
       };
     case Rol.Administrador:
       return {
         redirect: {
-          destination: "/dashboard_a",
+          destination: "/administradores/dashboard",
           permanent: false,
         },
       };
