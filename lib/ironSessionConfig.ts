@@ -1,11 +1,10 @@
-import type { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from 'next'
 import type { IronSessionOptions, IronSession } from 'iron-session';
 import type { Usuario } from '@prisma/client'
 import { withIronSessionApiRoute, withIronSessionSsr } from "iron-session/next";
 
 interface ModularSession extends IronSession {
   user: Omit<Usuario, 'contrasena'>,
-  role: string
 }
 
 export interface IronNextApiRequest extends NextApiRequest {

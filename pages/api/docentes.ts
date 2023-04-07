@@ -8,4 +8,4 @@ const handler = new Handler({
     put: updateDocente,
 });
 
-export default handler.listener()
+export default privateRoute(handler.listener())
