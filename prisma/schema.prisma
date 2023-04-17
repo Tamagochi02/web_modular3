@@ -12,7 +12,6 @@ model Usuario {
   nombre        String              @db.VarChar(100)
   correo        String              @db.VarChar(100) @unique
   rol           Rol
-  foto          String?             @db.Text
   estaActivo    Boolean             @default(true)
   contrasena    String              @db.VarChar(100)
   creadoEn      DateTime            @default(now())
