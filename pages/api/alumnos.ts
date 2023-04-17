@@ -12,4 +12,4 @@ const handler = new Handler({
 
 // No olvidemos exportar de manera predeterminada
 // el listener de nuestro orquestador
-export default privateRoute(handler.listener())
+export default privateRoute(handler.listener(), "POST")
