@@ -45,12 +45,12 @@ export const createAlumno: NextApiHandler = async (req, res) => {
 
 export const updateAlumno: NextApiHandler = async (req, res) => {
     const {
-        nombre, correo, contrasena, matricula,
-        foto, estaActivo, id
+        nombre, correo, contrasena, matricula, 
+        estaActivo, id
     } = req.body
     const user = await prisma.usuario.update({
         data: {
-            nombre, correo, contrasena, foto, matricula, estaActivo
+            nombre, correo, contrasena, matricula, estaActivo
         },
         where: {
             id
