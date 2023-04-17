@@ -52,3 +52,27 @@ export const createEtapa2: IronNextApiHandler = async (req, res) => {
     })
     return res.json(docEtapa)
 }
+
+export const createEtapa3: IronNextApiHandler = async (req, res) => {
+    const { documentId } = req.query
+    const { url } = req.body;
+    const document = await prisma.documento.findFirst({
+        where: {
+            id: documentId.toString()
+        }
+    })
+    if (!document) {
+        return res.status(404).json({ message: `Document with id ${documentId} not founc` })
+    }
+    const docEtapa1 = await prisma.docEtapa3.create({
+        data: {
+            url,
+            documento: {
+                connect: {
+                    id: document.id
+                }
+            }
+        }
+    })
+    return res.json(docEtapa1)
+}
