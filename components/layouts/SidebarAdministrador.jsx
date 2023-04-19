@@ -9,10 +9,12 @@ const SidebarAdministrador = () => {
 
         <div className="flex-grow mt-16">
             <SidebarButton href="/administradores/dashboard" nombre="Dashboard" icono="dashboard" />
+            <SidebarButton href="/administradores/busquedas" nombre="Busquedas" icono="manage_search" />
+            <SidebarButton href="/administradores/registros" nombre="Registros" icono="group_add" />
         </div>
 
         <div>
-            <SidebarButton href="/dashboard_perfil" nombre="Perfil" icono="person" />
+            <SidebarButton href="/administradores/perfiles" nombre="Perfil" icono="person" />
             <SidebarButton href="/api/logout" nombre="Salir" icono="exit_to_app" />
         </div>
     </aside>

@@ -2,8 +2,8 @@ import Link from "next/link";
 import Layout from "../../../components/layouts/MainLayout";
 import { privatePage } from "../../../lib/ironSessionConfig";
 
-const InfoProyecto = ({ user }) => {
-    return <Layout title='Proyecto' user={user} >
+const InfoModificacion = ({ user }) => {
+    return <Layout title='Modificación' user={user} >
         <div className="bg-white p-5 rounded-lg">
             <form className="flex flex-col w-[400px]">
                 <p className="">
@@ -60,4 +60,4 @@ export const getServerSideProps = privatePage(async (context) => {
     return { props: { user } }
 });
 
-export default InfoProyecto;
+export default InfoModificacion;

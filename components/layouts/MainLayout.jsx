@@ -2,6 +2,7 @@ import { Rol } from '@prisma/client';
 import Sidebar from "./Sidebar";
 import SidebarAdministrador from "./SidebarAdministrador";
 import Navbar from "./Navbar";
+import SidebarDocente from './SidebarDocente';
 
 const MainLayout = ({ title, user, children }) => {
   return (
@@ -11,7 +12,7 @@ const MainLayout = ({ title, user, children }) => {
           user.rol == Rol.Administrador
             ? <SidebarAdministrador />
             : user.rol == Rol.Docente
-              ? <h1>SIDEBAR DOCENTE</h1>
+              ? <SidebarDocente />
               : <Sidebar />
         }
         <div className="bg-gray-100 flex flex-col w-full h-screen">

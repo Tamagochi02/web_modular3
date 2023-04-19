@@ -8,14 +8,14 @@ const Proyectos = ({ user }) => {
     const [proyects, setProyects] = useState([])
 
     useEffect(() => {
-        fetch("/api/proyecto")
+        fetch("/api/projects")
             .then((response) => response.json())
             .then(setProyects)
-            .catch((error) => console.log(error))
+            .catch((error) => toast("Error en el proyecto"))
     }, [])
 
     return <Layout title='Proyectos' user={user} >
-        <Card>
+        <Card className="p-4">
             <div className="grid grid-cols-10 gap-5 auto-rows-auto">
                 <Link
                     href={"/alumnos/proyectos/new"}
@@ -30,11 +30,19 @@ const Proyectos = ({ user }) => {
                         href={`/alumnos/proyectos/${proyecto.id}`}
                         className="aspect-square rounded-md border-2 border-gray-300"
                     >
-                        <p>{proyecto.nombre}</p>
-                        <p>{proyecto.modulo}</p>
-                        <p>{proyecto.estado}</p>
-                        <p>{proyecto.evaluacion}</p>
+                        <div class="max-w-sm rounded overflow-hidden shadow-lg">
+                            <div class="px-6 py-4">
+                                <div className="font-bold text-xl mb-2"><p>{proyecto.nombre}</p></div>
+
+                                <div class="px-6 pt-4 pb-2">
+                                    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"><p>{proyecto.modulo}</p></span>
+                                    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"><p>{proyecto.estado}</p></span>
+                                    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"><p>{proyecto.evaluacion}</p></span>
+                                </div>
+                            </div>
+                        </div>
                     </Link>)
+
                 }
             </div>
         </Card>

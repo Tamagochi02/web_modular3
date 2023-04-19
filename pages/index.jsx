@@ -1,6 +1,8 @@
 import { Rol } from "@prisma/client";
 import { useRouter } from 'next/router'
 import { privatePage } from "../lib/ironSessionConfig";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const router = useRouter()
@@ -23,15 +25,16 @@ const Login = () => {
     })
       .then((response) => {
         if (response.ok) router.reload()
+        else toast("Error en usuario o contraseña")
       })
-      .catch((error) => console.log(error))
+      .catch((error) => toast("Error en usuario o contraseña"))
   }
 
   return (
     <div className="flex w-screen h-screen">
-      <div className="flex-1 bg-blue-500 grid place-content-center">
+      <div className="flex-1 bg-blue-600 grid place-content-center">
         <form onSubmit={onSubmitLoginForm} className="flex flex-col w-[400px] text-white">
-          <h1 className="text-4xl font-bold mb-5">Gestor Modulares</h1>
+          <h1 className="text-4xl font-bold mb-5">Gestor Modular</h1>
           <span>Correo:</span>
           <div>
             <input name="correo" type="text" className="bg-blue-500 border border-white px-2 rounded-lg h-10" />
@@ -40,6 +43,7 @@ const Login = () => {
           <span>Contraseña:</span>
           <input name="contraseña" type="password" className="bg-blue-500 border border-white px-2 rounded-lg h-10" />
           <button type="submit" className="mt-5 text-blue-500 bg-white h-10 rounded-lg">Ingresar</button>
+          <ToastContainer />
         </form>
       </div>
       <div className="flex-1 grid place-content-center">
