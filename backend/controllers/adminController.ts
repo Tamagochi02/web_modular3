@@ -29,7 +29,7 @@ export const updateAdmin: NextApiHandler = async (req, res) => {
     } = req.body
     const user = await prisma.usuario.update({
         data: {
-            nombre, correo, contrasena, foto, estaActivo
+            nombre, correo, contrasena, estaActivo
         },
         where: {
             id
