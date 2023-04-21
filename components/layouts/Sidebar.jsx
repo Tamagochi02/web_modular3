@@ -15,8 +15,8 @@ const Sidebar = () => {
         </div>
 
         <div>
-            <SidebarButton href="/alumnos/perfiles" nombre="Perfil" icono="person" />
-            <SidebarButton href="/api/logout" nombre="Salir" icono="exit_to_app" />
+            <SidebarButton href="/alumnos/perfiles" nombre="Perfil" icono="manage_accounts" />
+            <SidebarButton href="/api/logout" nombre="Salir" icono="logout" />
         </div>
     </aside>
 }

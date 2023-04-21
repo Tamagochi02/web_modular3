@@ -9,13 +9,12 @@ const SidebarDocente = () => {
 
         <div className="flex-grow mt-16">
             <SidebarButton href="/docentes/dashboard" nombre="Dashboard" icono="dashboard" />
-            <SidebarButton href="/docentes/busquedas" nombre="Busquedas" icono="manage_search" />
-            <SidebarButton href="/docentes/registros" nombre="Registros" icono="group_add" />
+            <SidebarButton href="/docentes/consultas" nombre="Consultas" icono="manage_search" />
         </div>
 
         <div>
-            <SidebarButton href="/docentes/perfiles" nombre="Perfil" icono="person" />
-            <SidebarButton href="/api/logout" nombre="Salir" icono="exit_to_app" />
+            <SidebarButton href="/docentes/perfiles" nombre="Perfil" icono="manage_accounts" />
+            <SidebarButton href="/api/logout" nombre="Salir" icono="logout" />
         </div>
     </aside>
 }

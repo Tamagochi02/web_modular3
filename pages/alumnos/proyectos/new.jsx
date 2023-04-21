@@ -1,9 +1,19 @@
 import { useRouter } from 'next/router'
+import { useEffect, useState } from "react";
 import Layout from "../../../components/layouts/MainLayout";
 import Card from "../../../components/Card";
 import { privatePage } from "../../../lib/ironSessionConfig";
 
 const NuevoProyecto = ({ user }) => {
+    const [proyects, setProyects] = useState([])
+
+    useEffect(() => {
+        fetch("/api/projects")
+            .then((response) => response.json())
+            .then(setProyects)
+            .catch((error) => toast("Error al crear el proyecto"))
+    }, [])
+
     const router = useRouter()
 
     const onSubmitCreateProyectForm = (eventForm) => {
@@ -15,7 +25,7 @@ const NuevoProyecto = ({ user }) => {
             modulo: data.get('modulo')
         }
 
-        fetch("/api/proyecto", {
+        fetch("/api/projects", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -30,8 +40,9 @@ const NuevoProyecto = ({ user }) => {
         <Card>
             <form onSubmit={onSubmitCreateProyectForm} className="flex flex-col w-[400px]">
                 <span>Nombre del proyecto</span>
-                <input name="nombre" type="text" className="border px-2 rounded-lg h-10" />
+                <input name="nombre" type="text" className="border px-2 rounded-lg h-10" placeholder="Arquitectura y programación de sistemas" />
                 <span>Modulo</span>
+                
                 <select name="modulo" className="bg-white border px-2 rounded-lg h-10">
                     <option value="Modulo_1">Modulo_1</option>
                     <option value="Modulo_2">Modulo_2</option>

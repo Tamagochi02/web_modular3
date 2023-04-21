@@ -3,19 +3,21 @@ import Layout from "../../../components/layouts/MainLayout";
 import Card from "../../../components/Card";
 import { privatePage } from "../../../lib/ironSessionConfig";
 
-const Registros = ({ user }) => {
+const Busquedas = ({ user }) => {
 
-    return <Layout title='Registros' user={user} >
+    return <Layout title='Busquedas' user={user} >
         <Card>
-            <div className="grid grid-cols-10 gap-5 auto-rows-auto">
+            <div className="grid grid-cols-5 gap-5 auto-rows-auto">
                 <Link
                     href={"/administradores/busquedas/tabla_alumnos"}
                     className="aspect-square rounded-md border-2 border-gray-300 grid place-content-center"
                 >
-                    {/* <span className="text-gray-300 text-5xl">
+                    <span className=" text-5xl text-center">
                         Usuarios
-                        
-                    </span> */}
+                        <label class="material-icons text-9xl text-gray-800 items-center">
+                            group
+                        </label>
+                    </span>
 
                 </Link>
                 {
@@ -41,4 +43,4 @@ export const getServerSideProps = privatePage(async (context) => {
     return { props: { user } }
 });
 
-export default Registros;
+export default Busquedas;

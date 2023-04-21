@@ -9,7 +9,7 @@ const Alumno = ({ user }) => {
     const [docentes, setDocentes] = useState([]);
     const [administradores, setAdministradores] = useState([]);
     const [rolSeleccionado, setRolSeleccionado] = useState("");
-    const [filtro, setFiltro] = useState([])
+    const [filtro, setFiltro] = useState('')
 
     const filtrarAlumnos = () => {
         if (Array.isArray(user)) {
@@ -36,17 +36,17 @@ const Alumno = ({ user }) => {
         fetch("/api/alumnos")
             .then((response) => response.json())
             .then(setAlumnos)
-            .catch((error) => console.log(error))
+            .catch((error) => toast("Error al obtener usuarios"))
 
         fetch("/api/docentes")
             .then((response) => response.json())
             .then(setDocentes)
-            .catch((error) => console.log(error))
+            .catch((error) => toast("Error al obtener usuarios"))
 
         fetch("/api/administradores")
             .then((response) => response.json())
             .then(setAdministradores)
-            .catch((error) => console.log(error))
+            .catch((error) => toast("Error al obtener usuarios"))
     }, [])
 
 
@@ -73,67 +73,37 @@ const Alumno = ({ user }) => {
                             <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">Correo electrónico</th>
                             <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">Rol</th>
                             <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">Matrícula</th>
-                            <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">Estatus</th>
-                            <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         {/* {filtrarAlumnos().map((alumno) => ( */}
-                        {alumnos.map((alumno) => (
+                        {alumnos.filter(a => a.correo.toLowerCase().startsWith(filtro.toLowerCase())).map((alumno) => (
                             <tr key={alumno.id}>
-                                <td className="border px-4 py-2" contentEditable={true}>{alumno.nombre}</td>
-                                <td className="border px-4 py-2" contentEditable={true}>{alumno.correo}</td>
-                                <td className="border px-4 py-2" contentEditable={true}>{alumno.rol}</td>
-                                <td className="border px-4 py-2" contentEditable={true}>{alumno.matricula}</td>
-                                <td className="border px-4 py-2" contentEditable={true}>{alumno.estaActivo ? "Activo" : "No activo"}</td>
-                                <td className="border px-4 py-2">
-                                    <span class="inline-block w-1/3 md:hidden font-bold">Acciones</span>
-                                    <button type="button" class="mr-3 text-sm bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">Save</button>
-                                    <button type="button" class="text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">Delete</button>
-                                </td>
+                                <td className="border px-4 py-2" >{alumno.nombre}</td>
+                                <td className="border px-4 py-2" >{alumno.correo}</td>
+                                <td className="border px-4 py-2" >{alumno.rol}</td>
+                                <td className="border px-4 py-2" >{alumno.matricula}</td>
                             </tr>
                         ))
                         }
 
-                        {docentes.map((docente) => (
+                        {docentes.filter(a => a.correo.toLowerCase().startsWith(filtro.toLowerCase())).map((docente) => (
                             <tr key={docente.id}>
-                                <td className="border px-4 py-2" contentEditable={true}>{docente.nombre}</td>
-                                <td className="border px-4 py-2" contentEditable={true}>{docente.correo}</td>
-                                <td className="border px-4 py-2" contentEditable={true}>{docente.rol}</td>
-                                <td className="border px-4 py-2" contentEditable={true}>{docente.matricula}</td>
-                                <td className="border px-4 py-2" contentEditable={true}>{docente.estaActivo ? "Activo" : "No activo"}</td>
-                                <td className="border px-4 py-2">
-                                    <span class="inline-block w-1/3 md:hidden font-bold">Acciones</span>
-                                    <button type="button" class="mr-3 text-sm bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">Save</button>
-                                    <button type="button" class="text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">Delete</button>
-                                </td>
+                                <td className="border px-4 py-2" >{docente.nombre}</td>
+                                <td className="border px-4 py-2" >{docente.correo}</td>
+                                <td className="border px-4 py-2" >{docente.rol}</td>
+                                <td className="border px-4 py-2" >{docente.matricula}</td>
+
                             </tr>
                         ))
                         }
 
-                        {administradores.map((admin, docente, alumno) => (
+                        {administradores.filter(a => a.correo.toLowerCase().startsWith(filtro.toLowerCase())).map((admin) => (
                             <tr key={admin.id}>
-                                <td className="border px-4 py-2" contentEditable={true}>{admin.nombre}</td>
-                                <td className="border px-4 py-2" contentEditable={true}>{admin.correo}</td>
-                                {/* <td className="border px-4 py-2">{admin.rol}</td> */}
-                                <td className="border px-4 py-2">
-                                    <select
-                                        value={rolSeleccionado}
-                                        onChange={(e) => setRolSeleccionado(e.target.value)}
-                                    >
-                                        <option value="administrador">{admin.rol}</option>
-                                        <option value="docente">Docente</option>
-                                        <option value="alumno">Alumno</option>
-                                    </select>
-                                </td>
-
-                                <td className="border px-4 py-2" contentEditable={true}>{admin.matricula}</td>
-                                <td className="border px-4 py-2" contentEditable={true}>{admin.estaActivo ? "Activo" : "No activo"}</td>
-                                <td className="border px-4 py-2">
-                                    <span class="inline-block w-1/3 md:hidden font-bold">Acciones</span>
-                                    <button type="button" class="mr-3 text-sm bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">Save</button>
-                                    <button type="button" class="text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">Delete</button>
-                                </td>
+                                <td className="border px-4 py-2" >{admin.nombre}</td>
+                                <td className="border px-4 py-2" >{admin.correo}</td>
+                                <td className="border px-4 py-2">{admin.rol}</td>
+                                <td className="border px-4 py-2" >{admin.matricula}</td>
                             </tr>
                         ))
                         }
