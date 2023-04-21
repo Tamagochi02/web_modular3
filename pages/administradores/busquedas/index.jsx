@@ -14,7 +14,7 @@ const Busquedas = ({ user }) => {
                 >
                     <span className=" text-5xl text-center">
                         Usuarios
-                        <label class="material-icons text-9xl text-gray-800 items-center">
+                        <label className="material-icons text-9xl text-gray-800 items-center">
                             group
                         </label>
                     </span>
