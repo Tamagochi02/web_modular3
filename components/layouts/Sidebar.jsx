@@ -8,10 +8,8 @@ const Sidebar = () => {
         </span>
 
         <div className="flex-grow mt-16">
-            <SidebarButton href="/alumnos/dashboard" nombre="Dashboard" icono="dashboard" />
             <SidebarButton href="/alumnos/proyectos" nombre="Proyectos" icono="description" />
             <SidebarButton href="/alumnos/modificaciones" nombre="Modificaciones" icono="edit" />
-            <SidebarButton href="/alumnos/consultas" nombre="Consultas" icono="source" />
         </div>
 
         <div>
