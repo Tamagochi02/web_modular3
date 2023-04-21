@@ -35,7 +35,7 @@ export const readProyectById: IronNextApiHandler = async (req, res) => {
 }
 
 export const createProyect: IronNextApiHandler = async (req, res) => {
-    const { nombre, modulo, correos} = req.body
+    const { nombre, modulo, ids } = req.body
     const proyecto = await prisma.proyecto.create({
         data: { nombre, modulo }
     })
@@ -53,8 +53,24 @@ export const createProyect: IronNextApiHandler = async (req, res) => {
             }
         }
     })
+    await prisma.proyectosUsuarios.create({
+        data: {
+            proyecto: {
+                connect: {
+                    id: proyecto.id
+                }
+            },
+            usuario: {
+                connect: {
+                    id: ids
+                }
+            }
+        }
+    })
 
-    for await (const correo of correos) {
+
+
+    /* for await (const correo of correos) {
         const usuario = await prisma.usuario.findFirst({
             where: {
                 correo: correo
@@ -76,7 +92,7 @@ export const createProyect: IronNextApiHandler = async (req, res) => {
                 }
             })
         }
-    }
+    } */
     res.json(proyecto)
 }
 
