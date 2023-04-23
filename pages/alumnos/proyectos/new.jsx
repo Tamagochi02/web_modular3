@@ -39,16 +39,16 @@ const NuevoProyecto = ({ user }) => {
     return <Layout title='Nuevo Proyecto' user={user} >
         <Card>
             <form onSubmit={onSubmitCreateProyectForm} className="flex flex-col w-[400px]">
-                <span>Nombre del proyecto</span>
+                <span className='block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2'>Nombre del modulo</span>
                 <input name="nombre" type="text" className="border px-2 rounded-lg h-10" placeholder="Arquitectura y programación de sistemas" />
-                <span>Modulo</span>
+                <span className='block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2'>Modulo</span>
                 
                 <select name="modulo" className="bg-white border px-2 rounded-lg h-10">
                     <option value="Modulo_1">Modulo_1</option>
                     <option value="Modulo_2">Modulo_2</option>
                     <option value="Modulo_3">Modulo_3</option>
                 </select>
-                <button type="submit" className="mt-5 bg-blue-500 text-white h-10 rounded-lg">Crear</button>
+                <button type="submit" className="mt-5 bg-blue-900 font-bold text-white h-10 rounded-lg">Crear</button>
             </form>
         </Card>
     </Layout>

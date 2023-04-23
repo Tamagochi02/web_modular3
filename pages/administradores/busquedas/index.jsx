@@ -9,17 +9,29 @@ const Busquedas = ({ user }) => {
         <Card>
             <div className="grid grid-cols-5 gap-5 auto-rows-auto">
                 <Link
-                    href={"/administradores/busquedas/tabla_alumnos"}
+                    href={"/administradores/busquedas/tabla_usuarios"}
                     className="aspect-square rounded-md border-2 border-gray-300 grid place-content-center"
                 >
-                    <span className=" text-5xl text-center">
+                    <span className=" text-5xl text-center cursor-pointer">
                         Usuarios
-                        <label className="material-icons text-9xl text-gray-800 items-center">
+                        <label className="material-icons text-9xl text-gray-800 items-center cursor-pointer">
                             group
                         </label>
                     </span>
-
                 </Link>
+
+                <Link
+                    href={"/administradores/busquedas/tabla_proyectos"}
+                    className="aspect-square rounded-md border-2 border-gray-300 grid place-content-center"
+                >
+                    <span className=" text-5xl text-center cursor-pointer">
+                        Proyectos
+                        <label className="material-icons text-9xl text-gray-800 items-center cursor-pointer">
+                            description
+                        </label>
+                    </span>
+                </Link>
+
                 {
 
                 }

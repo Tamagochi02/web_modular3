@@ -28,24 +28,16 @@ const PerfileCard = ({ user, children }) => {
                 </div>
 
                 <div class="text-center mt-2">
-                    <div class="text-xs mt-0 mb-2 text-slate-400 font-bold uppercase">
-                        <i class="fas fa-map-marker-alt mr-2 text-slate-400 opacity-75"></i>Matrícula: {user.matricula}
-                    </div>
                 </div>
-                {/* <div class="mt-6 py-6 border-t border-slate-200 text-center"> */}
                 <div class="flex flex-wrap justify-center mt-6 py-6 border-t border-slate-200">
                     <form className="flex flex-col w-[400px]">
 
-                        <span className="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2">Nombre:</span>
-                        <input name="nombre" type="text" className="border px-2 rounded-lg h-10" value={user.nombre} readOnly />
                         <span className="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2">Correo electrónico:</span>
                         <input name="nombre" type="text" className="border px-2 rounded-lg h-10" value={user.correo} readOnly />
                         <span className="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2">Estatus:</span>
                         <input name="nombre" type="text" className="border px-2 rounded-lg h-10" value={user.estaActivo ? "Activo" : "No activo"} readOnly />
-                        {/* <button type="submit" className="mt-5 bg-blue-800 text-white h-10 rounded-lg">Guardar</button> */}
                     </form>
                 </div>
-                {/* </div> */}
 
             </div>
         </div>

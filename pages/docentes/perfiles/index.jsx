@@ -29,7 +29,7 @@ const PerfileCard = ({ user, children }) => {
 
                 <div class="text-center mt-2">
                     <div class="text-xs mt-0 mb-2 text-slate-400 font-bold uppercase">
-                        <i class="fas fa-map-marker-alt mr-2 text-slate-400 opacity-75"></i>Matrícula: {user.matricula}
+                        <i class="fas fa-map-marker-alt mr-2 text-slate-400 opacity-75">Matrícula: {user.matricula}</i>
                     </div>
                 </div>
                 {/* <div class="mt-6 py-6 border-t border-slate-200 text-center"> */}
