@@ -10,7 +10,15 @@ const readAlumnoById: IronNextApiHandler = async (req, res) => {
             }
         }
     )
-    res.json(alumno)
+
+    const matricula = await prisma.matricula.findFirst({
+        where: {
+            usuario: {
+                id: alumno.id
+            }
+        }
+    })
+    res.json(matricula)
 }
 
 export default withIronSessionApiRoute(readAlumnoById, ironOptions)
