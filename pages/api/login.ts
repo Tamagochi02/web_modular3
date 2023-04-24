@@ -8,6 +8,7 @@ const login: IronNextApiHandler = async (req, res) => {
     if (!correo || !contrasena) return res.status(400).json({ message: 'Falta de datos' })
     const user = await prisma.usuario.findFirst({
         where: {
+            estaActivo: true,
             AND: [{ correo }, { contrasena }]
         }
     })
