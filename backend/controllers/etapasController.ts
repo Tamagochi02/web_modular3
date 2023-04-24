@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma"
+import { prisma } from "../../lib/prisma"
 import type { IronNextApiHandler } from "../../lib/ironSessionConfig"
 
 export const createEtapa1: IronNextApiHandler = async (req, res) => {
