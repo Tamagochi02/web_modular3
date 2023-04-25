@@ -58,3 +58,18 @@ export const updateAlumno: NextApiHandler = async (req, res) => {
     })
     res.json(user)
 }
+
+export const updateStatus: NextApiHandler = async (req, res) => {
+    const {
+        estaActivo, userId
+    } = req.body
+    const user = await prisma.usuario.update({
+        data: {
+            estaActivo
+        },
+        where: {
+            id: userId
+        }
+    })
+    res.json(user)
+}
