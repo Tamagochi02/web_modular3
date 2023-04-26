@@ -3,7 +3,7 @@ import type { IronNextApiHandler } from "../../lib/ironSessionConfig"
 import { Rol } from "@prisma/client"
 
 export const readProyects: IronNextApiHandler = async (req, res) => {
-    if (req.session.user.rol === Rol.Docente){
+    if (req.session.user.rol != Rol.Alumno){
         const p = await prisma.proyecto.findMany({})
         return res.json(p)
     }
