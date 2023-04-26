@@ -65,15 +65,15 @@ const NuevoProyecto = ({ user }) => {
     return <Layout title='Nuevo Proyecto' user={user} >
         <Card>
             <form onSubmit={onSubmitCreateProyectForm} className="flex flex-col w-[400px]">
-                <span className='block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2'>Nombre del modulo</span>
+                <span className='block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2'>Nombre del módulo</span>
                 <input name="nombre" type="text" className="border px-2 rounded-lg h-10" placeholder="Arquitectura y programación de sistemas" value={nombre} onChange={(event) => setNombre(event.target.value)} />
                 <span className='block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2'>Modulo</span>
 
                 <select name="modulo" className="bg-white border px-2 rounded-lg h-10" value={modulo} onChange={(event) => setModulo(event.target.value)}>
-                    <option value="opcion">Selecciona un modulo</option>
-                    <option value="Modulo_1">Modulo_1</option>
-                    <option value="Modulo_2">Modulo_2</option>
-                    <option value="Modulo_3">Modulo_3</option>
+                    <option value="opcion">Selecciona un módulo</option>
+                    <option value="Modulo_1">Módulo_1</option>
+                    <option value="Modulo_2">Módulo</option>
+                    <option value="Modulo_3">Módulo_3</option>
                 </select>
                 <p className="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2">
                     Integrantes:
