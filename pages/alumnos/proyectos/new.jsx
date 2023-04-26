@@ -72,7 +72,7 @@ const NuevoProyecto = ({ user }) => {
                 <select name="modulo" className="bg-white border px-2 rounded-lg h-10" value={modulo} onChange={(event) => setModulo(event.target.value)}>
                     <option value="opcion">Selecciona un módulo</option>
                     <option value="Modulo_1">Módulo_1</option>
-                    <option value="Modulo_2">Módulo</option>
+                    <option value="Modulo_2">Módulo_2</option>
                     <option value="Modulo_3">Módulo_3</option>
                 </select>
                 <p className="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2">
