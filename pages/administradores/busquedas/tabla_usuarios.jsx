@@ -92,11 +92,11 @@ const Usuarios = ({ user }) => {
                                 <td nombre="nombre" className="border px-4 py-2" >{alumno.nombre}</td>
                                 <td nombre="correo" className="border px-4 py-2" >{alumno.correo}</td>
                                 <td nombre="rol" className="border px-4 py-2" >{alumno.rol}</td>
-                                <td nombre="estatus" className="border px-4 py-2" >
+                                {/* <td nombre="estatus" className="border px-4 py-2" > */}
 
                                     {/* <button type="button" class="text-sm bg-blue-900 hover:bg-blue-900 font-bold text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">Cambiar estatus</button> */}
 
-                                </td>
+                                {/* </td> */}
                             </tr>
                         ))
                         }
@@ -106,11 +106,11 @@ const Usuarios = ({ user }) => {
                                 <td nombre="nombre" className="border px-4 py-2" >{docente.nombre}</td>
                                 <td nombre="correo" className="border px-4 py-2" >{docente.correo}</td>
                                 <td nombre="rol" className="border px-4 py-2" >{docente.rol}</td>
-                                <td nombre="estatus" className="border px-4 py-2" >
+                                {/* <td nombre="estatus" className="border px-4 py-2" > */}
 
                                     {/* <button type="button" class="text-sm bg-blue-900 hover:bg-blue-900 font-bold text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">Cambiar estatus</button> */}
 
-                                </td>
+                                {/* </td> */}
 
                             </tr>
                         ))
@@ -121,11 +121,11 @@ const Usuarios = ({ user }) => {
                                 <td nombre="nombre" className="border px-4 py-2" >{admin.nombre}</td>
                                 <td nombre="correo" className="border px-4 py-2" >{admin.correo}</td>
                                 <td nombre="rol" className="border px-4 py-2">{admin.rol}</td>
-                                <td nombre="estatus" className="border px-4 py-2" >
+                                {/* <td nombre="estatus" className="border px-4 py-2" > */}
 {/* 
                                     <button type="button" class="text-sm bg-blue-900 hover:bg-blue-900 font-bold text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">Cambiar estatus</button> */}
 
-                                </td>
+                                {/* </td> */}
                             </tr>
                         ))
                         }
