@@ -94,7 +94,7 @@ const Usuarios = ({ user }) => {
                                 <td nombre="rol" className="border px-4 py-2" >{alumno.rol}</td>
                                 <td nombre="estatus" className="border px-4 py-2" >
 
-                                    <button type="button" class="text-sm bg-blue-900 hover:bg-blue-900 font-bold text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">Cambiar estatus</button>
+                                    {/* <button type="button" class="text-sm bg-blue-900 hover:bg-blue-900 font-bold text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">Cambiar estatus</button> */}
 
                                 </td>
                             </tr>
@@ -108,7 +108,7 @@ const Usuarios = ({ user }) => {
                                 <td nombre="rol" className="border px-4 py-2" >{docente.rol}</td>
                                 <td nombre="estatus" className="border px-4 py-2" >
 
-                                    <button type="button" class="text-sm bg-blue-900 hover:bg-blue-900 font-bold text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">Cambiar estatus</button>
+                                    {/* <button type="button" class="text-sm bg-blue-900 hover:bg-blue-900 font-bold text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">Cambiar estatus</button> */}
 
                                 </td>
 
@@ -122,8 +122,8 @@ const Usuarios = ({ user }) => {
                                 <td nombre="correo" className="border px-4 py-2" >{admin.correo}</td>
                                 <td nombre="rol" className="border px-4 py-2">{admin.rol}</td>
                                 <td nombre="estatus" className="border px-4 py-2" >
-
-                                    <button type="button" class="text-sm bg-blue-900 hover:bg-blue-900 font-bold text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">Cambiar estatus</button>
+{/* 
+                                    <button type="button" class="text-sm bg-blue-900 hover:bg-blue-900 font-bold text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">Cambiar estatus</button> */}
 
                                 </td>
                             </tr>

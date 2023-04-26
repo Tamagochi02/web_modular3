@@ -22,7 +22,7 @@ const Busquedas = ({ user }) => {
                 </Link>
 
                 <Link
-                    href={"/administradores/busquedas/tabla_proyectos"}
+                    href={"/administradores/busquedas/proyectos"}
                     className="aspect-square rounded-md border-2 border-gray-300 grid place-content-center"
                 >
                     <span className=" text-5xl text-center cursor-pointer">

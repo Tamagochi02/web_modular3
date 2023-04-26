@@ -88,14 +88,14 @@ const InfoProyecto = ({ user }) => {
         });
     }, [])
 
-    return <Layout title='Documentos' user={user} >
+    return <Layout title='' user={user} >
 
         <div className="bg-white p-5 rounded-lg mt-8">
-            {/* <h1 className="block uppercase tracking-wide text-gray-700 text-lg font-bold mb-2">Documentos</h1> */}
+            <h1 className="block uppercase tracking-wide text-gray-700 text-lg font-bold mb-2">Documentos</h1>
             <div className="grid grid-cols-6 gap-5 auto-rows-auto">
                 
                 {documents.map(documentos => <Link
-                    href={`/docentes/consultas/proyectos/${proyectId}/${documentos.id}/${documentos.etapa}`}
+                    href={`/administradores/busquedas/proyectos/${proyectId}/${documentos.id}/${documentos.etapa}`}
                     className=" rounded-md border-2 border-gray-300"
                 >
                     <div class="px-6 py-4">
