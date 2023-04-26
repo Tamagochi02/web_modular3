@@ -12,7 +12,7 @@ const MainLayout = ({ title, user, children }) => {
           user.rol == Rol.Administrador
             ? <SidebarAdministrador />
             : user.rol == Rol.Docente
-              ? <SidebarDocente />
+              ? <SidebarDocente/>
               : <Sidebar />
         }
         <div className="bg-gray-100 flex flex-col w-full h-screen">

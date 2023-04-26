@@ -6,9 +6,10 @@ import { privatePage } from "../../../lib/ironSessionConfig";
 const Busquedas = ({ user }) => {
 
     return <Layout title='Busquedas' user={user} >
-        <Card>
-            <div className="grid grid-cols-5 gap-5 auto-rows-auto">
-                <Link
+
+        <div class="relative max-w-md mx-auto md:max-w-2xl mt-6 min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-xl py-5 px-5">
+            <div className="grid grid-cols-2 gap-5 auto-rows-auto">
+            <Link
                     href={"/administradores/busquedas/tabla_usuarios"}
                     className="aspect-square rounded-md border-2 border-gray-300 grid place-content-center"
                 >
@@ -35,8 +36,9 @@ const Busquedas = ({ user }) => {
                 {
 
                 }
+
             </div>
-        </Card>
+        </div>
     </Layout>
 
 };

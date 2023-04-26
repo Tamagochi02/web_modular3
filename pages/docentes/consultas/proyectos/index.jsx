@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import Layout from "../../../components/layouts/MainLayout";
-import Card from "../../../components/Card";
-import { privatePage } from "../../../lib/ironSessionConfig";
+import Layout from "../../../../components/layouts/MainLayout";
+import Card from "../../../../components/Card";
+import { privatePage } from "../../../../lib/ironSessionConfig";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -13,7 +13,7 @@ const Proyectos = ({ user }) => {
         fetch("/api/projects")
             .then((response) => response.json())
             .then(setProyects)
-            .catch((error) => toast("Error al obtener los proyecto"))
+            .catch((error) => toast("Error en el proyecto"))
     }, [])
 
     return <Layout title='Proyectos' user={user} >

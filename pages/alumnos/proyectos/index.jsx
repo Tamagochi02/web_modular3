@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import Layout from "../../../components/layouts/MainLayout";
 import Card from "../../../components/Card";
 import { privatePage } from "../../../lib/ironSessionConfig";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Proyectos = ({ user }) => {
     const [proyects, setProyects] = useState([])
@@ -26,13 +28,6 @@ const Proyectos = ({ user }) => {
                         add
                     </span>
                 </Link>
-                    // <div className="aspect-square rounded-md border-2 border-gray-300 grid place-content-center">
-                    //     <span className="text-center text-2xl">
-                    //         Limite de <br />
-                    //         Proyectos
-                    //     </span>
-                    // </div>
-
                 }
                 {
                     proyects.map(proyecto => <Link
@@ -49,7 +44,6 @@ const Proyectos = ({ user }) => {
                                 <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"><p>{proyecto.evaluacion}</p></span>
                             </div>
                         </div>
-                        {/* </div> */}
                     </Link>)
 
                 }

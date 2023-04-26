@@ -45,9 +45,16 @@ const Login = ({ user }) => {
           <button type="submit" className="mt-5 text-blue-600 bg-white h-10 rounded-lg font-bold">Ingresar</button>
           <ToastContainer />
         </form>
+
+        <p className="mt-5 text-center block mb-2 text-sm font-medium text-white dark:text-white uppercase">¿No tienes
+          una cuenta?
+          Registrate<a class="text-red-500 hover:underline"
+            href="/usuarios/registros"> ¡Aquí!</a>.
+        </p>
       </div>
       <div className="flex-1 grid place-content-center">
         <img src="organize blue-resume.svg" alt="organize" />
+        {/* <img src="FoxH3B.png" alt="organize" /> */}
       </div>
     </div>
   );

@@ -4,9 +4,11 @@ import { privatePage } from "../../lib/ironSessionConfig";
 
 const Dashboard = ({ user }) => {
     return <Layout title='Administrador' user={user} >
+        <div class="flex h-screen w-full items-center justify-center text-center bg-white bg-[url('/FoxH3A.png')] bg-center bg-no-repeat">
 
+        </div>
     </Layout>
-    
+
 };
 
 export const getServerSideProps = privatePage(async (context) => {
