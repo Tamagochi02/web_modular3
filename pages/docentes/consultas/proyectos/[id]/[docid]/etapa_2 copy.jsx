@@ -36,57 +36,57 @@ const Etapa2 = ({ user }) => {
             });
         }, [])
 
-        // const payload = {
-        //     observaciones: data.get('observaciones')
-        // }
+        const payload = {
+            observaciones: data.get('observaciones')
+        }
 
-        // const payload1 = {
-        //     estado: data.get('estado'),
-        //     evaluacion: data.get('evaluacion'),
-        // }
+        const payload1 = {
+            estado: data.get('estado'),
+            evaluacion: data.get('evaluacion'),
+        }
 
-        // fetch(`/api/documents/${documentId}/observaciones`, {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     },
-        //     body: JSON.stringify(payload),
-        // })
-        //     .then((response) => {
-        //         if (response.ok) {
-        //             toast.success("Evaluación exitosa")
-        //             setTimeout(() => {
-        //                 router.push(`/docentes/consultas/proyectos/${proyectId}`);
-        //             }, 3000);
-        //         } else {
-        //             console.log(error)
-        //             toast.error("Error al evaluar")
-        //         }
-        //     })
-        //     .catch((error) => {
-        //         toast.error("Error al evaluar");
-        //     });
+        fetch(`/api/documents/${documentId}/observaciones`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload),
+        })
+            .then((response) => {
+                if (response.ok) {
+                    toast.success("Evaluación exitosa")
+                    setTimeout(() => {
+                        router.push(`/docentes/consultas/proyectos/${proyectId}`);
+                    }, 3000);
+                } else {
+                    console.log(error)
+                    toast.error("Error al evaluar")
+                }
+            })
+            .catch((error) => {
+                toast.error("Error al evaluar");
+            });
 
-        // fetch(`/api/evaluarProyecto`, {
-        //     method: "PUT",
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     },
-        //     body: JSON.stringify(payload1),
-        // })
-        //     .then((response) => {
-        //         if (response.ok) {
-        //             toast.success("Evaluación exitosa")
-        //             setTimeout(() => {
-        //                 router.push(`/docentes/consultas/proyectos/${proyectId}`);
-        //             }, 3000);
-        //         } else {
-        //             toast.error("Error al evaluar")
-        //         }
-        //     })
-        //     .catch((error) => {
-        //         toast.error("Error al evaluar");
-        //     });
+        fetch(`/api/evaluarProyecto`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload1),
+        })
+            .then((response) => {
+                if (response.ok) {
+                    toast.success("Evaluación exitosa")
+                    setTimeout(() => {
+                        router.push(`/docentes/consultas/proyectos/${proyectId}`);
+                    }, 3000);
+                } else {
+                    toast.error("Error al evaluar")
+                }
+            })
+            .catch((error) => {
+                toast.error("Error al evaluar");
+            });
 
     }
 
@@ -109,7 +109,7 @@ const Etapa2 = ({ user }) => {
 
                     <span name="correos" id="message" rows="" className="resize block border px-2 rounded-lg w-full h-32" placeholder="Describe la desripción de tu proyecto..." >
                         {proyects && proyects.usuarios && proyects.usuarios.map(up => <p>{up.usuario.correo}</p>)}</span> */}
-                    {/* <span className='block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2 text-center'>Integrantes del proyecto:</span>
+                    <span className='block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2 text-center'>Integrantes del proyecto:</span>
                     <table>
                         <thead>
                             <tr class="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto  md:relative ">
@@ -127,7 +127,7 @@ const Etapa2 = ({ user }) => {
                                 </tr>
                             ))}
                         </tbody>
-                    </table> */}
+                    </table>
 
 
 
@@ -167,13 +167,13 @@ const Etapa2 = ({ user }) => {
                 <div className='flex flex-col'>
 
                     <span className='block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2'>Estado:</span>
-                    <select name="estado" className="bg-white border px-2 rounded-lg h-10">
+                    <select name="estado" value={estado} onChange={(event) => setEstado(event.target.value)} className="bg-white border px-2 rounded-lg h-10">
                         <option value="opcion">Selecciona el estado</option>
                         <option value="Modulo_2">Debe_modificarse</option>
                         <option value="Modulo_3">Revisado</option>
                     </select>
                     <span className='block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2'>Evaluación:</span>
-                    <select name="evaluacion" className="bg-white border px-2 rounded-lg h-10" >
+                    <select name="evaluacion" className="bg-white border px-2 rounded-lg h-10" value={evaluacion} onChange={(event) => setEvaluacion(event.target.value)}>
                         <option value="opcion">Selecciona la evaluación</option>
                         <option value="Modulo_1">Acreditado</option>
                         <option value="Modulo_2">No_acreditado</option>

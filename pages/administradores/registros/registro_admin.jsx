@@ -70,7 +70,7 @@ const RegistroAdmin = ({ user, children }) => {
                     <p className="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2">
                         Vuelve a escribir la Contraseña:
                     </p>
-                    <input name="recontrasena" type="text" className="border px-2 rounded-lg h-10" placeholder="Escribe de nuevo la contraseña" />
+                    <input name="recontrasena" type="password" className="border px-2 rounded-lg h-10" placeholder="Escribe de nuevo la contraseña" />
 
                     <div dir="rtl">
                         <div class="relative h-32 w-32">

@@ -48,7 +48,7 @@ const Login = ({ user }) => {
 
         <p className="mt-5 text-center block mb-2 text-sm font-medium text-white dark:text-white uppercase">¿No tienes
           una cuenta?
-          Registrate<a class="text-red-500 hover:underline"
+          Registrate<a className="text-red-500 hover:underline"
             href="/usuarios/registros"> ¡Aquí!</a>.
         </p>
       </div>

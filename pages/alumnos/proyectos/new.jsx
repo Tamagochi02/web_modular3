@@ -10,18 +10,22 @@ const NuevoProyecto = ({ user }) => {
 
     const [nombre, setNombre] = useState('')
     const [modulo, setModulo] = useState('')
+    const [asesores, serAsesores] = useState('')
 
     const [alumnos, setAlumnos] = useState([])
     const [select1, setSelect1] = useState("");
     const [select2, setSelect2] = useState("");
-    const [asesor, setAsesor] = useState("");
+    const [asesor, setAsesor] = useState([]);
 
 
     useEffect(() => {
         Promise.all([
             fetch("/api/alumnos").then((response) => response.json()),
-        ]).then(([ alumnosData]) => {
+            fetch("/api/docentes").then((response) => response.json())
+        ]).then(([alumnosData, docentesData]) => {
             setAlumnos(alumnosData);
+            setAsesor(docentesData);
+            console.log(docentesData);
         }).catch((error) => {
             toast("Error al obtener los datos");
         });
@@ -37,7 +41,9 @@ const NuevoProyecto = ({ user }) => {
         const payload = {
             nombre: data.get('nombre'),
             modulo: data.get('modulo'),
-            correos: [data.get('correo1'), data.get('correo2')]
+            correos: [data.get('correo1'), data.get('correo2')],
+            // asesor: data.get('asesor1')
+
         }
 
 
@@ -82,9 +88,9 @@ const NuevoProyecto = ({ user }) => {
 
                     onChange={(event) => setSelect1(event.target.value)}>
                     <option value="opcion">Selecciona una integrante</option>
-                    {alumnos.filter(alumno => alumno.correo != select2).map((alumno) => (
-                        <option key={alumno.id} value={alumno.correo}>
-                            {alumno.correo}
+                    {alumnos.filter(alumno => alumno.nombre != select2).map((alumno) => (
+                        <option key={alumno.id} value={alumno.nombre}>
+                            {alumno.nombre}
                         </option>
                     ))}
                 </select>
@@ -95,11 +101,28 @@ const NuevoProyecto = ({ user }) => {
                 <select id="alumn-select" name="correo2" className="bg-white border px-2 rounded-lg h-10" value={select2}
                     onChange={(event) => setSelect2(event.target.value)}>
                     <option value="opcion">Selecciona una integrante</option>
-                    {alumnos.filter(alumno => alumno.correo != select1).map((alumno) => (
-                        <option key={alumno.id} value={alumno.correo}>
-                            {alumno.correo}
+                    {alumnos.filter(alumno => alumno.nombre != select1).map((alumno) => (
+                        <option key={alumno.id} value={alumno.nombre}>
+                            {alumno.nombre}
                         </option>
                     ))}
+                </select>
+
+                <p className="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2">
+                    Asesor:
+                </p>
+
+                <select id="asesor-select" name="asesor1" className="bg-white border px-2 rounded-lg h-10"
+
+                >
+                    <option className="bg-white border px-2 rounded-lg h-10">Selecciona una asesor</option>
+                    {asesor.map((docente) => (
+                        <option key={docente.id}>
+                            {docente.nombre}
+
+                        </option>
+                    ))}
+
                 </select>
                 {/* <div class="flex flex-wrap justify-center mt-5 py-3 border-t border-t-slate-900">
                 </div> */}
@@ -107,7 +130,7 @@ const NuevoProyecto = ({ user }) => {
                 <ToastContainer />
             </form>
         </Card>
-    </Layout>
+    </Layout >
 };
 
 export const getServerSideProps = privatePage(async (context) => {

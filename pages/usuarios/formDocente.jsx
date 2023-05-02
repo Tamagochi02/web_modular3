@@ -64,12 +64,12 @@ const FormDocente = ({ }) => {
                             <p className="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2">
                                 Correo institucional:
                             </p>
-                            <input name="correo" type="text" className="border px-2 rounded-lg h-10" placeholder="correoalumno@universidad-une.com" />
+                            <input name="correo" type="text" className="border px-2 rounded-lg h-10" placeholder="correoadocente@universidad-une.com" />
 
                             <p className="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2">
                                 Nombre:
                             </p>
-                            <input name="nombre" type="text" className="border px-2 rounded-lg h-10" placeholder="Nombre" />
+                            <input name="nombre" type="text" className="border px-2 rounded-lg h-10" placeholder="Nombres" />
 
                             <p className="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2">
                                 Apellido Paterno:
@@ -90,7 +90,7 @@ const FormDocente = ({ }) => {
                             <p className=" text-cnblock uppercase tracking-wide text-gray-700 text-sm font-bold mb-2">
                                 Reescribe la Contraseña:
                             </p>
-                            <input name="password" type="text" className="border px-2 rounded-lg h-10" placeholder="Escribe de nuevo la contraseña" value={confirmPassword}
+                            <input name="password" type="password" className="border px-2 rounded-lg h-10" placeholder="Escribe de nuevo la contraseña" value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)} />
                             <button type="submit" className="mt-5 bg-purple-700 text-white h-10 rounded-lg font-bold">Registrarme</button>
                             <ToastContainer />
