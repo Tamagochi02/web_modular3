@@ -23,6 +23,22 @@ export const readProyects: IronNextApiHandler = async (req, res) => {
 
 export const readProyectById: IronNextApiHandler = async (req, res) => {
     const { proyectoid } = req.query;
+    if (req.session.user.rol != Rol.Alumno) {
+        const p = await prisma.proyecto.findFirst({
+            where: {
+                id: proyectoid.toString(),
+            },
+            include: {
+                usuarios: {
+                    include: {
+                        usuario: true
+                    }
+                },
+
+            }
+        })
+        return res.json(p)
+    }
     const proyectos = await prisma.proyecto.findFirst({
         where: {
             id: proyectoid.toString(),
@@ -33,6 +49,13 @@ export const readProyectById: IronNextApiHandler = async (req, res) => {
                     }
                 }
             }
+        },
+        include: {
+            usuarios: {
+                include: {
+                    usuario: true
+                }
+            },
 
         }
     })
@@ -40,7 +63,7 @@ export const readProyectById: IronNextApiHandler = async (req, res) => {
 }
 
 export const createProyect: IronNextApiHandler = async (req, res) => {
-    const { nombre, modulo, correos} = req.body
+    const { nombre, modulo, correos } = req.body
     const proyecto = await prisma.proyecto.create({
         data: { nombre, modulo }
     })
@@ -65,7 +88,7 @@ export const createProyect: IronNextApiHandler = async (req, res) => {
                 correo: correo
             }
         })
-        if(usuario) {
+        if (usuario) {
             await prisma.proyectosUsuarios.create({
                 data: {
                     proyecto: {
