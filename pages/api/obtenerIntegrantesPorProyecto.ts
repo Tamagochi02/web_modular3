@@ -6,7 +6,7 @@ import { Rol } from "@prisma/client";
 
 const readUsersByProjectId: IronNextApiHandler = async (req, res) => {
     const { proyectoId } = req.body
-    const users = await prisma.proyectosUsuarios.findFirst({
+    const users = await prisma.proyectosUsuarios.findMany({
         where: {
             proyectoId: proyectoId,
             usuario: {
