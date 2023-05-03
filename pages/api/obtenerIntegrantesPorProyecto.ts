@@ -6,16 +6,21 @@ import { Rol } from "@prisma/client";
 
 const readUsersByProjectId: IronNextApiHandler = async (req, res) => {
     const { proyectoId } = req.body
-    const users = await prisma.proyectosUsuarios.findMany({
+    const usuariosProyecto  = await prisma.proyectosUsuarios.findMany({
         where: {
             proyectoId: proyectoId,
             usuario: {
                 rol: Rol.Alumno
             }
         }
-    }
-    )
-    res.json(users);
+    })
+    const usuarios = await Promise.all(usuariosProyecto.map(async (usuarioProyecto) => {
+        const usuario = await prisma.usuario.findUnique({
+          where: { id: usuarioProyecto.usuarioId }
+        })
+        return { usuarioProyecto, usuario: usuario }
+      }))
+    res.json(usuarios);
 }
 
 export default withIronSessionApiRoute(readUsersByProjectId, ironOptions)
