@@ -21,7 +21,6 @@ const readUsersByProjectId: IronNextApiHandler = async (req, res) => {
                 id: user.usuarioId
             }
         })
-
         res.json(usuario);
     }
 }
