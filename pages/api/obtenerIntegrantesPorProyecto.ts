@@ -2,14 +2,18 @@ import { withIronSessionApiRoute } from "iron-session/next";
 import type { IronNextApiHandler } from '../../lib/ironSessionConfig'
 import { ironOptions } from '../../lib/ironSessionConfig'
 import { prisma } from "../../lib/prisma";
+import { Rol } from "@prisma/client";
 
 const readUsersByProjectId: IronNextApiHandler = async (req, res) => {
-    const {proyectoId} = req.body
+    const { proyectoId } = req.body
     const users = await prisma.proyectosUsuarios.findFirst({
         where: {
-            proyectoId: proyectoId
+            proyectoId: proyectoId,
+            usuario: {
+                rol: Rol.Alumno
             }
         }
+    }
     )
     res.json(users);
 }
