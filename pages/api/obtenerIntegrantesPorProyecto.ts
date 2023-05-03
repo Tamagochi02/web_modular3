@@ -16,13 +16,13 @@ const readUsersByProjectId: IronNextApiHandler = async (req, res) => {
     })
 
     for await (const user of usuariosProyecto) {
-        const usuario = await prisma.usuario.findFirst({
+        await prisma.usuario.findFirst({
             where: {
                 id: user.usuarioId
             }
         })
-        res.json(usuario);
     }
+    res.json(usuariosProyecto);
 }
 
 export default withIronSessionApiRoute(readUsersByProjectId, ironOptions)
