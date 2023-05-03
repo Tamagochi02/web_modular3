@@ -14,14 +14,6 @@ const readUsersByProjectId: IronNextApiHandler = async (req, res) => {
             }
         }
     })
-
-    for await (const user of usuariosProyecto) {
-        await prisma.usuario.findFirst({
-            where: {
-                id: user.usuarioId
-            }
-        })
-    }
     res.json(usuariosProyecto);
 }
 
