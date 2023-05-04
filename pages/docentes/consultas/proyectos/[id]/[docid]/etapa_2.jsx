@@ -22,50 +22,36 @@ const Etapa2 = ({ user }) => {
         eventForm.preventDefault();
         const data = new FormData(eventForm.target);
 
-        useEffect(() => {
-            Promise.all([
-                fetch(`/api/projects/${proyectId}`).then((response) => response.json()),
-                fetch(`/api/documents/${documentId}`).then((response) => response.json()),
-            ]).then(([pro, res]) => {
-                setDocuments(res)
-                setProyects(pro)
-    
-            }).catch((error) => {
-                toast("Error al obtener los datos");
-                console.log(error)
-            });
-        }, [])
-
-        // const payload = {
-        //     observaciones: data.get('observaciones')
-        // }
+        const payload = {
+            observaciones: data.get('observaciones')
+        }
 
         // const payload1 = {
         //     estado: data.get('estado'),
         //     evaluacion: data.get('evaluacion'),
         // }
 
-        // fetch(`/api/documents/${documentId}/observaciones`, {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     },
-        //     body: JSON.stringify(payload),
-        // })
-        //     .then((response) => {
-        //         if (response.ok) {
-        //             toast.success("Evaluación exitosa")
-        //             setTimeout(() => {
-        //                 router.push(`/docentes/consultas/proyectos/${proyectId}`);
-        //             }, 3000);
-        //         } else {
-        //             console.log(error)
-        //             toast.error("Error al evaluar")
-        //         }
-        //     })
-        //     .catch((error) => {
-        //         toast.error("Error al evaluar");
-        //     });
+        fetch(`/api/documents/${documentId}/observaciones`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload),
+        })
+            .then((response) => {
+                if (response.ok) {
+                    toast.success("Evaluación exitosa")
+                    setTimeout(() => {
+                        router.push(`/docentes/consultas/proyectos/${proyectId}`);
+                    }, 3000);
+                } else {
+                    console.log(error)
+                    toast.error("Error al evaluar")
+                }
+            })
+            .catch((error) => {
+                toast.error("Error al evaluar");
+            });
 
         // fetch(`/api/evaluarProyecto`, {
         //     method: "PUT",
@@ -89,9 +75,18 @@ const Etapa2 = ({ user }) => {
         //     });
 
     }
-
-    // console.log(documentId)
-    // console.log(proyects.correo)
+    useEffect(() => {
+        Promise.all([
+            fetch(`/api/projects/${proyectId}`).then((response) => response.json()),
+            fetch(`/api/documents/${documentId}`).then((response) => response.json())
+        ]).then(([pro, res]) => {
+            setDocuments(res)
+            setProyects(pro)
+        }).catch((error) => {
+            toast("Error al obtener los datos");
+            console.log(error)
+        });
+    }, [])
 
     return <Layout title='Etapa 2 - Resumen' user={user} >
         <Card className="p-4">
@@ -105,10 +100,12 @@ const Etapa2 = ({ user }) => {
                     <span name="titulo" type="text" className="border px-2 rounded-lg h-10" placeholder="Título">
                         {documents && documents.DocEtapa2 && documents.DocEtapa2.length > 0 ? documents?.titulo : ''}</span>
 
-                    {/* <span className='block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2'>Integrantes del proyecto:</span>
+                    <span className='block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2'>Integrantes del proyecto:</span>
 
                     <span name="correos" id="message" rows="" className="resize block border px-2 rounded-lg w-full h-32" placeholder="Describe la desripción de tu proyecto..." >
-                        {proyects && proyects.usuarios && proyects.usuarios.map(up => <p>{up.usuario.correo}</p>)}</span> */}
+                        {proyects && proyects.usuarios && proyects.usuarios.map(up => <p>{up.usuario.correo}</p>)}</span>
+
+
                     {/* <span className='block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2 text-center'>Integrantes del proyecto:</span>
                     <table>
                         <thead>

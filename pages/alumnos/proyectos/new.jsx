@@ -88,7 +88,7 @@ const NuevoProyecto = ({ user }) => {
 
                     onChange={(event) => setSelect1(event.target.value)}>
                     <option value="opcion">Selecciona una integrante</option>
-                    {alumnos.filter(alumno => alumno.nombre != select2).map((alumno) => (
+                    {alumnos.filter(alumno => alumno.nombre != select2 && alumno.nombre !== user.nombre).map((alumno) => (
                         <option key={alumno.id} value={alumno.nombre}>
                             {alumno.nombre}
                         </option>
@@ -101,7 +101,7 @@ const NuevoProyecto = ({ user }) => {
                 <select id="alumn-select" name="correo2" className="bg-white border px-2 rounded-lg h-10" value={select2}
                     onChange={(event) => setSelect2(event.target.value)}>
                     <option value="opcion">Selecciona una integrante</option>
-                    {alumnos.filter(alumno => alumno.nombre != select1).map((alumno) => (
+                    {alumnos.filter(alumno => alumno.nombre != select1 && alumno.nombre !== user.nombre).map((alumno) => (
                         <option key={alumno.id} value={alumno.nombre}>
                             {alumno.nombre}
                         </option>

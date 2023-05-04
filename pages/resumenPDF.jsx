@@ -1,8 +1,28 @@
 import React from 'react';
+import { useRouter } from 'next/router'
+import { useEffect, useState } from "react";
 
 
 
-function PDFContent() {
+const PDFContent = () => {
+  const router = useRouter()
+  const { docid: documentId, id: proyectId } = router.query
+  const [documents, setDocuments] = useState()
+  const [proyects, setProyects] = useState()
+
+  useEffect(() => {
+    Promise.all([
+      fetch(`/api/projects/${proyectId}`).then((response) => response.json()),
+      fetch(`/api/documents/${documentId}`).then((response) => response.json())
+    ]).then(([pro, res]) => {
+      setDocuments(res)
+      setProyects(pro)
+    }).catch((error) => {
+      toast("Error al obtener los datos");
+      console.log(error)
+    });
+  }, [])
+
   return (
     <div className='felx flex-col container'>
       <div className='flex justify-center'>
@@ -11,7 +31,7 @@ function PDFContent() {
 
       <h1 className=' mt-4 text-center font-bold text-lg'>PROYECTO DEL MÓDULO</h1>
       <div className='text-center' name='nombre modulo'>
-        <p>Este es un párrafo de ejemplo.</p>
+        <p></p>
       </div>
       <h1 className=' mt-4 text-center font-bold text-lg'>TÍTULO</h1>
       <h1 className=' mt-4 text-center font-bold text-lg'>Descripción</h1>

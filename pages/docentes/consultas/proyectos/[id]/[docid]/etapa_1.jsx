@@ -1,66 +1,96 @@
 import Link from "next/link";
 import { useRouter } from 'next/router'
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Layout from "../../../../../../components/layouts/MainLayout";
 import Card from "../../../../../../components/Card";
 import { privatePage } from "../../../../../../lib/ironSessionConfig";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+const estadoInicialProyecto = {
+    observacion: '',
+    estado: 'Debe_modificarse',
+    evaluacion: 'Acreditado'
+}
+
 const Etapa1 = ({ user }) => {
     const router = useRouter()
     const { docid: documentId, id: proyectId } = router.query
     const [proyects, setProyects] = useState({})
     const [documents, setDocuments] = useState([])
+    const [proyecto, setProyecto] = useState(estadoInicialProyecto)
 
-    const onSubmitEvaluaEtapa1Form = (eventForm) => {
-        eventForm.preventDefault();
-        const data = new FormData(eventForm.target);
-        const { docid: documentId } = router.query
+    const handleChange = (event) => {
+        const { name, value } = event.target
+        setProyecto({
+            ...proyecto,
+            [name]: value
+        })
+    }
 
-        useEffect(() => {
-            Promise.all([
-                fetch(`/api/projects/${proyectId}`).then((response) => response.json()),
-                fetch(`/api/documents/${documentId}`).then((response) => response.json()),
-            ]).then(([pro, res]) => {
-                setDocuments(res)
-                setProyects(pro)
+    const onSubmitEvaluaEtapa1Form = useCallback(async () => {
 
-            }).catch((error) => {
-                toast("Error al obtener los datos");
-                console.log(error)
-            });
-        }, [])
+        const {
+            observacion,
+            estado,
+            evaluacion
+        } = proyecto
 
-
-        const payload = {
-            nombre: data.get('nombre'),
-            correo: data.get('correo'),
-            nombre: data.get('nombreDocente')
+        try {
+            const responseObservaciones = await fetch(`/api/documents/${documentId}/observaciones`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ observacion })
+            })
+            if (!responseObservaciones.ok) {
+                throw new Error()
+            }
+            toast("Evaluación exitosa")
+        } catch (error) {
+            toast.error("Error al registrar observacion")
         }
 
-        fetch(`/api/projects/${proyectId}/documents`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(payload),
-        })
-            .then((response) => {
-                if (response.ok) {
-                    toast("Registro exitoso")
-                    setTimeout(() => {
-                        router.reload()
-                        // router.push(`/alumnos/proyectos/${proyectId}`);
-                    }, 1000);
-                } else {
-                    toast("Error al crear el documento")
-                }
+        try {
+            const responseEvaluar = await fetch(`/api/evaluarProyecto`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    estado,
+                    evaluacion,
+                    id: proyectId
+                })
             })
-            .catch((error) => {
-                toast.error("Error al crear el documento");
-            });
-    }
+            if (!responseEvaluar.ok) {
+                throw new Error()
+            }
+            toast("Evaluación exitosa")
+        } catch (error) {
+            toast.error("Error al evaluar")
+        }
+
+        setTimeout(() => {
+            router.push(`/docentes/consultas/proyectos/${proyectId}`)
+        }, 1000)
+       
+    }, [documentId, proyectId, proyecto])
+
+    useEffect(() => {
+        Promise.all([
+            fetch(`/api/projects/${proyectId}`).then((response) => response.json()),
+            fetch(`/api/documents/${documentId}`).then((response) => response.json()),
+        ]).then(([pro, res]) => {
+            setDocuments(res)
+            setProyects(pro)
+
+        }).catch((error) => {
+            toast("Error al obtener los datos");
+            console.log(error)
+        });
+    }, [])
 
 
     return <Layout title='Etapa-1 Estado del arte' user={user} >
@@ -115,32 +145,52 @@ const Etapa1 = ({ user }) => {
                                 documents.DocEtapa1.length > 0 ? documents.DocEtapa1[0]?.referencias : '' : '' : ''}
                     </span>
                 </div>
-
             </form>
         </Card>
 
         <Card className="p-4">
-            <form onSubmit={onSubmitEvaluaEtapa1Form} className="flex flex-col">
+            <div className="flex flex-col">
                 <div className='flex flex-col'>
-
                     <span className='block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2'>Estado:</span>
-                    <select name="estado" className="bg-white border px-2 rounded-lg h-10">
-                        <option value="opcion">Selecciona el estado</option>
-                        <option value="Modulo_2">Debe_modificarse</option>
-                        <option value="Modulo_3">Revisado</option>
+                    <select
+                        name="estado"
+                        className="bg-white border px-2 rounded-lg h-10"
+                        value={proyecto.estado}
+                        onChange={handleChange}
+                    >
+                        <option value="Debe_modificarse">Debe_modificarse</option>
+                        <option value="Revisado">Revisado</option>
                     </select>
                     <span className='block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2'>Evaluación:</span>
-                    <select name="evaluacion" className="bg-white border px-2 rounded-lg h-10">
-                        <option value="opcion">Selecciona la evaluación</option>
-                        <option value="Modulo_1">Acreditado</option>
-                        <option value="Modulo_2">No_acreditado</option>
+                    <select
+                        name="evaluacion"
+                        className="bg-white border px-2 rounded-lg h-10"
+                        value={proyecto.evaluacion}
+                        onChange={handleChange}
+                    >
+                        <option value="Acreditado">Acreditado</option>
+                        <option value="No_acreditado">No_acreditado</option>
                     </select>
                 </div>
                 <span className='block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2' >Observaciones Generales</span>
-                <textarea name="referencias" id="message" rows="" className="resize block border px-2 rounded-lg w-full h-32" placeholder="Las observaciones al documento..." readOnly></textarea>
-
-                <button type="submit" className="mt-5 bg-purple-900 font-bold text-white h-10 rounded-lg">Calificar</button>
-            </form>
+                <textarea
+                    name="observacion"
+                    id="message"
+                    rows="" c
+                    lassName="resize block border px-2 rounded-lg w-full h-32"
+                    placeholder="Las observaciones al documento..."
+                    value={proyecto.observacion}
+                    onChange={handleChange}
+                />
+                <button
+                    type="submit"
+                    className="mt-5 bg-purple-900 font-bold text-white h-10 rounded-lg"
+                    onClick={onSubmitEvaluaEtapa1Form}
+                >
+                    Calificar
+                </button>
+                <ToastContainer />
+            </div>
         </Card>
     </Layout>
 };
