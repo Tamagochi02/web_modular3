@@ -4,15 +4,18 @@ import { ironOptions } from '../../lib/ironSessionConfig'
 import { prisma } from "../../lib/prisma";
 import { Rol } from "@prisma/client";
 
-const readUsersById: IronNextApiHandler = async (req, res) => {
-    const { userId } = req.body
-    const usuarios = await prisma.usuario.findMany({
+const readUsersByProjectId: IronNextApiHandler = async (req, res) => {
+    const { proyectoId } = req.body
+    const integrantes = await prisma.usuario.findMany({
         where: {
-            id: userId,
-            rol: Rol.Alumno
+            proyectos: {
+                every: {
+                    proyectoId: proyectoId
+                }
+            }
         }
     })
-    res.json(usuarios);
+    res.json(integrantes);
 }
 
-export default withIronSessionApiRoute(readUsersById, ironOptions)
+export default withIronSessionApiRoute(readUsersByProjectId, ironOptions)
