@@ -43,7 +43,6 @@ const NuevoProyecto = ({ user }) => {
             modulo: data.get('modulo'),
             correos: [data.get('correo1'), data.get('correo2')],
             // asesor: data.get('asesor1')
-
         }
 
 

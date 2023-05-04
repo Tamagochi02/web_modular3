@@ -11,7 +11,7 @@ const InfoProyecto = ({ user }) => {
     const router = useRouter()
     const { id: proyectId } = router.query
 
-    
+
 
     const [etapaValue, setEtapaValue] = useState(false);
     const [documents, setDocuments] = useState([])
@@ -93,7 +93,7 @@ const InfoProyecto = ({ user }) => {
         <div className="bg-white p-5 rounded-lg mt-8">
             {/* <h1 className="block uppercase tracking-wide text-gray-700 text-lg font-bold mb-2">Documentos</h1> */}
             <div className="grid grid-cols-6 gap-5 auto-rows-auto">
-                
+
                 {documents.map(documentos => <Link
                     href={`/docentes/consultas/proyectos/${proyectId}/${documentos.id}/${documentos.etapa}`}
                     className=" rounded-md border-2 border-gray-300"
@@ -111,8 +111,15 @@ const InfoProyecto = ({ user }) => {
                         </div>
 
                         {/* <div class="flex  justify-end">
-                        <button type="submit" className=" text-red-600 font-bold rounded-lg material-icons">close</button>
-                    </div> */}
+                            <button type="submit" className=" text-purple-700 font-bold rounded-lg material-icons">download</button>
+                        </div> */}
+
+                        
+                        {/* <button class="group rounded-2xl h-12 w-48 bg-green-500 font-bold text-lg text-white relative overflow-hidden">
+                            Hover me!
+                            <div class="absolute duration-300 inset-0 w-full h-full transition-all scale-0 group-hover:scale-100 group-hover:bg-white/30 rounded-2xl">
+                            </div>
+                        </button> */}
                     </div>
                 </Link>)
 

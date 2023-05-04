@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Layout from "../../../../../../components/layouts/MainLayout";
 import Card from "../../../../../../components/Card";
 import { privatePage } from "../../../../../../lib/ironSessionConfig";
@@ -7,103 +7,50 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const DoceEtapa2 = ({ user }) => {
-    const [proyects, setProyects] = useState([]);
 
-    useEffect(() => {
-        fetch('/api/projects')
-            .then((response) => response.json())
-            .then(setProyects)
-            .catch((error) => toast('Error al crear el proyecto'));
-    }, []);
+    const payload = {
+        "media": {
+            "ext": "pdf",
+            "b64": ""
+        },
+        "description": ""
+    };
 
-    const router = useRouter();
-
-    const onSubmitCreateProyectForm = (eventForm) => {
+    const onSubmitDocumentForm = useCallback(async () => {
         eventForm.preventDefault();
         const data = new FormData(eventForm.target);
 
-        const payload = {
-            descripcion: data.get('descripcion'),
-            objGeneral: data.get('objGeneral'),
-            objsMetas: data.get('objsMetas'),
-            alcance: data.get('alcance'),
-            herramientas: data.get('herramientas'),
-            pdf: data.get('pdf'),
-        };
-
-        fetch('/api/projects/documents', {
-            method: 'POST',
-            body: JSON.stringify(payload),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-            .then(() => router.push('/alumnos/proyectos/'))
-            .catch((error) => console.log(error));
-    };
-
-    const onFileChange = (event) => {
-        const arr = [];
-        if (arr.length > 0) {
-            const firstItem = arr[0];
-            const file = event.target.files[0];
-            if (file && file.type === 'application/pdf') {
-                const data = new FormData();
-                data.append('pdf', file);
-                //evaluar
-                fetch('/api/upload/pdf', {
-                    method: 'POST',
-                    body: data,
-                })
-                    .then((response) => response.json())
-                    .then((data) => {
-                        document.getElementById('pdf').value = data.filename;
-                    })
-                    .catch((error) => console.log(error));
-            } else {
-                toast('Por favor seleccione un archivo PDF');
+        try {
+            const response = await fetch(`/api/documents/${documentId}/observaciones`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            })
+            if (!response.ok) {
+                console.log(response);
+                throw new Error()
             }
-        } else {
-            toast('Por favor seleccione un archivo PDF');
+            toast("Evaluación exitosa")
+
+        } catch (error) {
+            toast.error("Error al registrar observacion")
+
         }
-    };
+    }, [])
 
     return <Layout title='Etapa 3 - Informe Final' user={user} >
         <Card>
-            <form onSubmit={onFileChange} className="flex flex-col">
-                <div class="max-w-2xl mx-auto">
-
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-black uppercase" for="file_input">Documento:</label>
-                    <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file"
-                        accept="application/pdf"
-                        onChange={(e) => {
-                            const file = e.target.files[0];
-                            if (file && file.type !== "application/pdf") {
-                                alert("Solo se permiten archivos PDF.");
-                                e.target.value = "";
-                            }
-                        }}
-                    ></input>
-
-                    <p class="mt-5 text-center block mb-2 text-sm font-medium text-gray-900 dark:text-black uppercase">Sube tu Informe
-                        Final en
-                        formato<a class="text-red-700 "
-                            target="_blank"> pdf</a>.
-                    </p>
-
-                    {/* <p class="mt-5 text-center block mb-2 text-sm font-medium text-gray-900 dark:text-black uppercase">Sube tu Informe
-                        Final en
-                        formato<a class="text-red-700 hover:underline"
-                            href="#" target="_blank"> pdf</a>.
-                    </p> */}
-                    
-                </div>
-
-                {/* <button type="submit" className="mt-5 bg-blue-500 text-white h-10 rounded-lg">Crear</button> */}
-                <div dir="rtl">
-                    <div class="relative h-32 w-32">
-                        <button type="submit" className="mt-5 bg-blue-900 text-white rounded-lg absolute inset-x-0 top-0 h-11 font-bold">Subir</button>
-                    </div>
+            <form className="flex flex-col">
+                <div class="flex w-full h-screen items-center justify-center bg-grey-lighter">
+                    <label class="w-64 flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-purple-700 hover:text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 96 960 960" width="48">
+                            <path d="M251 896q-88 0-149.5-61.5T40 685q0-79 50.5-137.5T217 477q15-84 82-148.5T451 264q24 0 42 13.5t18 36.5v294l83-83 43 43-156 156-156-156 43-43 83 83V319q-86 11-135 75.5T267 534h-19q-61 0-104.5 43T100 685q0 65 45 108t106 43h500q45 0 77-32t32-77q0-45-32-77t-77-32h-63v-84q0-68-33-117.5T570 338v-65q81 29 129.5 101T748 534v24q72-2 122 46t50 123q0 69-50 119t-119 50H251Zm229-347Z" />
+                        </svg>
+                        <span class="mt-2 text-base leading-normal">Descargar PDF</span>
+                        <input type='file' class="hidden" />
+                    </label>
                 </div>
             </form>
         </Card>

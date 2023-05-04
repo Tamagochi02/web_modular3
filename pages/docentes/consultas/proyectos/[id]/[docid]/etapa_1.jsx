@@ -176,8 +176,8 @@ const Etapa1 = ({ user }) => {
                 <textarea
                     name="observacion"
                     id="message"
-                    rows="" c
-                    lassName="resize block border px-2 rounded-lg w-full h-32"
+                    rows="" 
+                    className="resize block border px-2 rounded-lg w-full h-32"
                     placeholder="Las observaciones al documento..."
                     value={proyecto.observacion}
                     onChange={handleChange}
