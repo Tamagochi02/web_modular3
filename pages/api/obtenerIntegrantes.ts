@@ -9,7 +9,7 @@ const readUsersByProjectId: IronNextApiHandler = async (req, res) => {
     const integrantes = await prisma.usuario.findMany({
         where: {
             proyectos: {
-                every: {
+                some: {
                     proyectoId: proyectoId
                 }
             }
