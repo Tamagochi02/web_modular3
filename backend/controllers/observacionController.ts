@@ -12,13 +12,14 @@ export const readByDocumentId: IronNextApiHandler = async (req, res) => {
 export const createObservation: IronNextApiHandler = async (req, res) => {
     const { documentId } = req.query
     const { observacion } = req.body
+
     const document = await prisma.documento.findFirst({
         where: {
             id: documentId.toString()
         }
     })
     if (!document) {
-        return res.status(404).json({ message: `Document with id ${documentId} not founc` })
+        return res.status(404).json({ message: `Document with id ${documentId} not found` })
     }
     const observacionCreated = await prisma.observacion.create({
         data: {
