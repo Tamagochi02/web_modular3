@@ -14,6 +14,8 @@ const readUsersByProjectId: IronNextApiHandler = async (req, res) => {
                 }
             },
             rol: Rol.Alumno
+        }, include: {
+            matricula: true
         }
     })
     res.json(integrantes);
