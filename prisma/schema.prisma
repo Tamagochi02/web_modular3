@@ -80,6 +80,8 @@ model Documento {
   DocEtapa1     DocEtapa1[]
   DocEtapa2     DocEtapa2[]
   DocEtapa3     DocEtapa3[]
+
+  @@index([proyectoId])
 }
 
 enum Etapa {
@@ -98,6 +100,8 @@ model DocEtapa1 {
   desarrollo    String
   conclusion    String
   referencias   String
+
+  @@index([documentoId])
 }
 
 model DocEtapa2 {
@@ -109,6 +113,8 @@ model DocEtapa2 {
   objsMetas    String
   alcance      String
   herramientas String
+
+  @@index([documentoId])
 }
 
 model DocEtapa3 {
@@ -116,6 +122,8 @@ model DocEtapa3 {
   documento   Documento @relation(fields: [documentoId], references: [id])
   documentoId String
   url         String
+
+  @@index([documentoId])
 }
 
 model Observacion {
@@ -127,6 +135,9 @@ model Observacion {
   usuarioId     String
   documento     Documento @relation(fields: [documentoId], references: [id])
   documentoId   String
+
+  @@index([usuarioId])
+  @@index([documentoId])
 }
 
 model ProyectosUsuarios {
@@ -136,4 +147,6 @@ model ProyectosUsuarios {
   proyectoId String
 
   @@id([usuarioId, proyectoId])
+  @@index([usuarioId])
+  @@index([proyectoId])
 }
