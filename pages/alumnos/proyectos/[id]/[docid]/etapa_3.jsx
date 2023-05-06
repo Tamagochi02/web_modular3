@@ -7,6 +7,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const DoceEtapa2 = ({ user }) => {
+    const router = useRouter()
+    const { docid: documentId } = router.query
     const [proyects, setProyects] = useState([]);
 
     const payload = {
@@ -17,44 +19,90 @@ const DoceEtapa2 = ({ user }) => {
         "description": ""
     };
 
+    const convertBase64 = (file) => {
 
-    const onFileChange = useCallback(async () => {
-        const arr = [];
-        if (arr.length > 0) {
-            const firstItem = arr[0];
-            const file = event.target.files[0];
-            if (file && file.type === 'application/pdf') {
-                try {
-                    const response = await fetch(`https://web-production-77aa.up.railway.app//posts/a`, {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify(payload)
-                    })
-                    if (!response.ok) {
-                        console.log(response);
-                        throw new Error()
-                    }
-                    toast("Evaluación exitosa")
+        if (Blob.prototype.isPrototypeOf(file)) {
+            return new Promise((resolve, reject) => {
+                    const fileReader = new FileReader();
+                    fileReader.readAsDataURL(file);
+        
+                    fileReader.onload = () => {
+                        resolve(fileReader.result);
+                    };
+        
+                    fileReader.onerror = (error) => {
+                        reject(error);
+                    };
+                });
+          } else {
+            console.log("error");
+          }
+        
+        // return new Promise((resolve, reject) => {
+        //     const fileReader = new FileReader();
+        //     fileReader.readAsDataURL(file);
 
-                } catch (error) {
-                    toast.error("Error al registrar observacion")
+        //     fileReader.onload = () => {
+        //         resolve(fileReader.result);
+        //     };
 
-                }
-            } else {
-                toast('Archivo encontrado');
+        //     fileReader.onerror = (error) => {
+        //         reject(error);
+        //     };
+        // });
+    };
+
+
+
+    const handleFileSelected = async (event) => {
+        // prevetntDefault
+        event.preventDefault();
+        // const file = event.target.files[0];
+        const file = Array.from(event.target.file?? []);
+        console.log("files:", file)
+        const fileb64 = await convertBase64(file)
+        payload.media.b64 = fileb64
+
+        try {
+            const response = await fetch(`https://web-production-77aa.up.railway.app//posts/a`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            })
+            if (!response.ok) {
+                console.log(response.media)
+                throw new Error()
             }
-        } else {
-            toast('Archivo no encontrado');
+            toast("Archivo cargado")
+
+            //liga la url a la etapa 3 del doc
+
+            const response1 = await fetch(`api/documents/${documentId}/etapa3`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ 'url': (await response.json()).media })
+            })
+            if (!response1.ok) {
+                console.log(response1);
+                throw new Error()
+            }
+            toast("Archivo")
+
+        } catch (error) {
+            toast.error("Error al cargar archivo")
+
         }
 
 
-    }, [])
+    }
 
     return <Layout title='Etapa 3 - Informe Final' user={user} >
         <Card>
-            <form onSubmit={onFileChange} className="flex flex-col">
+            <form onSubmit={handleFileSelected} className="flex flex-col">
                 <div className="max-w-2xl mx-auto">
 
                     <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-black uppercase" for="file_input">Documento:</label>

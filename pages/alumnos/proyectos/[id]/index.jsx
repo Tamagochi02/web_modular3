@@ -9,9 +9,9 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const InfoProyecto = ({ user }) => {
     const router = useRouter()
-    const { id: proyectId } = router.query
+    const { id: proyectId , docid: documentId} = router.query
 
-    
+
 
     const [etapaValue, setEtapaValue] = useState(false);
     const [documents, setDocuments] = useState([])
@@ -26,7 +26,6 @@ const InfoProyecto = ({ user }) => {
     const onSubmitCreateProyectForm = (eventForm) => {
         eventForm.preventDefault();
         const data = new FormData(eventForm.target);
-        const { docid: documentId } = router.query
 
 
         if (asesor === "opcionAsesor") {
@@ -75,23 +74,26 @@ const InfoProyecto = ({ user }) => {
             fetch("/api/docentes").then((response) => response.json()),
             fetch("/api/alumnos").then((response) => response.json()),
             fetch(`/api/projects/${proyectId}`).then((response) => response.json()),
-            fetch(`/api/projects/${proyectId}/documents`).then((response) => response.json())
+            fetch(`/api/projects/${proyectId}/documents`).then((response) => response.json()),
+            fetch(`/api/documents/${documentId}/observaciones`).then((response) => response.json())
         ]).then(([projectsData, docentesData, alumnosData, proyectPayload, documents]) => {
             setProyects(projectsData);
             setDocentes(docentesData);
             setAlumnos(alumnosData);
             setProyect(proyectPayload);
-            console.log(documents)
+            // console.log(documents)
             setDocuments(documents)
+            
         }).catch((error) => {
             toast("Error al obtener los datos");
         });
     }, [])
 
+
     return <Layout title='Documentos' user={user} >
         <div className="bg-white p-5 rounded-lg mt-8">
             {/* <h1 className="block uppercase tracking-wide text-gray-700 text-lg font-bold mb-2">Documentos</h1> */}
-            <div className="grid grid-cols-6 gap-5 auto-rows-auto">
+            <div className="grid grid-cols-4 gap-5 auto-rows-auto">
                 <Link
                     href={`/alumnos/proyectos/${proyectId}/create_doc`}
                     className="aspect-square rounded-md border-2 border-gray-300 grid place-content-center"
@@ -105,17 +107,18 @@ const InfoProyecto = ({ user }) => {
                     href={`/alumnos/proyectos/${proyectId}/${documentos.id}/${documentos.etapa}`}
                     className=" rounded-md border-2 border-gray-300"
                 >
-                    <div class="px-6 py-4">
+                    <div className="px-6 py-4">
                         <div className=" font-bold text-xl mb-2 text-center"><p>{documentos.nombre}</p></div>
 
-                    
-                        <div class=" pt-4 pb-2">
-                            <span class="font-semibold "><p>Titulo:</p>{documentos.titulo}</span>
+
+                        <div className=" pt-4 pb-2">
+                            <span className="font-semibold "><p>Titulo:</p>{documentos.titulo}</span>
 
                         </div>
-                        <div class=" pt-4 pb-2 text-center">
 
-                            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"><p>{documentos.etapa}</p></span>
+                        <div className=" pt-4 pb-2 text-center">
+
+                            <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"><p>{documentos.etapa}</p></span>
                         </div>
 
                         {/* <div class="flex  justify-end">

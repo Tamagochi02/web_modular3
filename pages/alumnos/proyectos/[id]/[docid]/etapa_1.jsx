@@ -9,6 +9,8 @@ import 'react-toastify/dist/ReactToastify.css';
 const DoceEtapa1 = ({ user }) => {
     const router = useRouter()
     const { docid: documentId, id: proyectId } = router.query
+    const [proyects, setProyects] = useState({})
+    const [observaciones, setObservacion] = useState([])
 
     const onSubmitCreateDoceEtapa1Form = (eventForm) => {
         eventForm.preventDefault();
@@ -43,9 +45,23 @@ const DoceEtapa1 = ({ user }) => {
             .catch((error) => {
                 toast.error("Error al crear el estado de arte");
             });
-            
+
     }
 
+    useEffect(() => {
+        Promise.all([
+            fetch(`/api/documents/${documentId}/observaciones`).then((response) => response.json())
+        ]).then(([observacionData]) => {
+            setObservacion(observacionData)
+            console.log(observacionData);
+
+        }).catch((error) => {
+            toast("Error al obtener los datos");
+        });
+    }, [])
+
+    // console.log(observaciones && observaciones.observacion !== '' ?
+    //     observaciones.observacion : '');
 
     return <Layout title='Etapa 1 - Estado del Arte' user={user} >
         <Card>
@@ -63,10 +79,20 @@ const DoceEtapa1 = ({ user }) => {
                     <textarea name="conclusion" id="message" rows="" className="resize block border px-2 rounded-lg w-full h-32" placeholder="Tu conclusión sobre tu proyecto..." ></textarea>
                     <span className='block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2' >Referencias</span>
                     <textarea name="referencias" id="message" rows="" className="resize block border px-2 rounded-lg w-full h-32" placeholder="Las referencias donde sacaste ideas para tú proyecto..." ></textarea>
+                    <div className=" pt-4 pb-2">
+                        <span className="font-semibold "><p>Observaciones: <br />
+
+                            {typeof observaciones !== '' ?
+                                    observaciones.length > 0 ? observaciones?.observacion : '' : ''}
+                                    </p>
+
+                        </span>
+
+                    </div>
                 </div>
                 {/* <button type="submit" className="mt-5 bg-blue-500 text-white h-10 rounded-lg">Crear</button> */}
                 <div dir="rtl">
-                    <div class="relative h-32 w-32">
+                    <div className="relative h-32 w-32">
                         <button type="submit" className="mt-5 bg-blue-900 text-white rounded-lg absolute inset-x-0 top-0 h-16 font-bold">Guardar</button>
                         <ToastContainer />
                     </div>
