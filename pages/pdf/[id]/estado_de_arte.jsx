@@ -2,10 +2,33 @@ import { saveAs } from "file-saver";
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/router'
 import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 const handleDownload = async () => {
-  const pdfBlob = await window.pdf(document.getElementById("pdf-container")).toBlob();
-  saveAs(pdfBlob, "archivo.pdf");
+  const pdf = new jsPDF();
+  const container = document.getElementById("pdf-container");
+
+  const canvas = await html2canvas(container);
+  const imgData = canvas.toDataURL("image/png");
+
+  const imgWidth = 210; 
+  const pageHeight = 297;
+  const imgHeight = (canvas.height * imgWidth) / canvas.width;
+  let heightLeft = imgHeight;
+
+  let position = 0;
+
+  pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+  heightLeft -= pageHeight;
+
+  while (heightLeft >= 0) {
+    position = heightLeft - imgHeight;
+    pdf.addPage();
+    pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+    heightLeft -= pageHeight;
+  }
+
+  pdf.save("archivo.pdf");
 };
 
 const PDFContent = () => {
@@ -35,14 +58,14 @@ const PDFContent = () => {
 
 
 
-  // Tu código para obtener los datos y mostrar el contenido del PDF
+  // código para obtener los datos y mostrar el contenido del PDF
 
   return (
     <div id="pdf-container" className="felx flex-col container">
       {/* Tu código para mostrar el contenido del PDF */}
 
       <div className='flex justify-center'>
-        <img src="logo.png" alt="" className=" mt-20 w-full lg:w-1/3 xl:w-1/5" />
+        <img src="/logo.png" alt="" className=" mt-20 w-full lg:w-1/3 xl:w-1/5" />
       </div>
 
       <div className=' mt-4 text-center font-bold text-lg'>
