@@ -16,29 +16,54 @@ const DoceEtapa2 = ({ user }) => {
         "description": ""
     };
 
-    const onSubmitDocumentForm = useCallback(async () => {
-        eventForm.preventDefault();
-        const data = new FormData(eventForm.target);
+    
+
+    const handleFileSelected = async (event) => {
+        event.preventDefault();
+
+        const file = Array.from(event.target.file ?? []);
+        console.log("files:", file);
+        const fileb64 = await convertBase64(file);
+        payload.media.b64 = fileb64;
 
         try {
-            const response = await fetch(`/api/documents/${documentId}/observaciones`, {
+            const response = await fetch("/api/upload", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(payload)
-            })
+            });
+
             if (!response.ok) {
-                console.log(response);
-                throw new Error()
+                throw new Error(`Error al cargar archivo: ${response.statusText}`);
             }
-            toast("Evaluación exitosa")
 
+            const responseData = await response.json();
+            console.log("Respuesta del servidor:", responseData);
+
+            toast("Archivo cargado");
+
+            const response1 = await fetch(`api/documents/${documentId}/etapa3`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ 'url': responseData.media })
+            });
+
+            if (!response1.ok) {
+                console.log(response1);
+                throw new Error(`Error al actualizar el documento: ${response1.statusText}`);
+            }
+
+            toast("Archivo vinculado a la etapa 3 del documento");
         } catch (error) {
-            toast.error("Error al registrar observacion")
-
+            console.error("Error al cargar archivo:", error.message);
+            toast.error(`Error al cargar archivo: ${error.message}`);
         }
-    }, [])
+
+    };
 
     return <Layout title='Etapa 3 - Informe Final' user={user} >
         <Card>

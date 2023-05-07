@@ -146,6 +146,7 @@ const Etapa1 = ({ user }) => {
                     </span>
                 </div>
             </form>
+            <button className="material-icons">download</button>
         </Card>
 
         <Card className="p-4">

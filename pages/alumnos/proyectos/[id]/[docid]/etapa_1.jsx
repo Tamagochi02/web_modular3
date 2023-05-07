@@ -5,6 +5,7 @@ import Card from "../../../../../components/Card";
 import { privatePage } from "../../../../../lib/ironSessionConfig";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 //No funciona
 const DoceEtapa1 = ({ user }) => {
     const router = useRouter()
@@ -80,14 +81,18 @@ const DoceEtapa1 = ({ user }) => {
                     <span className='block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2' >Referencias</span>
                     <textarea name="referencias" id="message" rows="" className="resize block border px-2 rounded-lg w-full h-32" placeholder="Las referencias donde sacaste ideas para tú proyecto..." ></textarea>
                     <div className=" pt-4 pb-2">
-                        <span className="font-semibold "><p>Observaciones: <br />
-
-                            {typeof observaciones !== '' ?
-                                    observaciones.length > 0 ? observaciones?.observacion : '' : ''}
-                                    </p>
-
+                        <span className="font-semibold">
+                            <p>Observaciones:</p>
+                            {observaciones && observaciones.length > 0 ? (
+                                observaciones.map((obs, index) => (
+                                    <div key={index}>
+                                        {obs.observacion}
+                                    </div>
+                                ))
+                            ) : (
+                                <p>No hay observaciones</p>
+                            )}
                         </span>
-
                     </div>
                 </div>
                 {/* <button type="submit" className="mt-5 bg-blue-500 text-white h-10 rounded-lg">Crear</button> */}
