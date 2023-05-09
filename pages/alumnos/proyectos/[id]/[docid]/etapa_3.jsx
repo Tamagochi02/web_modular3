@@ -6,10 +6,12 @@ import { privatePage } from '../../../../../lib/ironSessionConfig';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+
 const DoceEtapa2 = ({ user }) => {
     const router = useRouter();
     const { docid: documentId } = router.query;
     const [proyects, setProyects] = useState([]);
+    const [observaciones, setObservacion] = useState([])
 
     const payload = {
         media: {
@@ -79,6 +81,19 @@ const DoceEtapa2 = ({ user }) => {
         }
     };
 
+
+    useEffect(() => {
+        Promise.all([
+            fetch(`/api/documents/${documentId}/observaciones`).then((response) => response.json())
+        ]).then(([observacionData]) => {
+            setObservacion(observacionData)
+            console.log(observacionData);
+
+        }).catch((error) => {
+            toast("Error al obtener los datos");
+        });
+    }, [])
+
     return (
         <Layout title='Etapa 3 - Informe Final' user={user}>
             <Card>
@@ -130,9 +145,28 @@ const DoceEtapa2 = ({ user }) => {
                             </button>
                         </div>
                     </div>
+                    <ToastContainer />
                 </form>
             </Card>
-            <ToastContainer />
+
+
+            <Card>
+                <div className=" pt-4 pb-2">
+                    <span className="font-semibold">
+                        <p className='block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2'>Observaciones:</p>
+                        {observaciones && observaciones.length > 0 ? (
+                            observaciones.map((obs, index) => (
+                                <div key={index}>
+                                    {obs.observacion}
+                                </div>
+                            ))
+                        ) : (
+                            <p>No hay observaciones</p>
+                        )}
+                    </span>
+                </div>
+            </Card>
+
         </Layout>
     );
 };

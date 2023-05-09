@@ -82,7 +82,7 @@ const DoceEtapa1 = ({ user }) => {
                     <textarea name="referencias" id="message" rows="" className="resize block border px-2 rounded-lg w-full h-32" placeholder="Las referencias donde sacaste ideas para tú proyecto..." ></textarea>
                     <div className=" pt-4 pb-2">
                         <span className="font-semibold">
-                            <p>Observaciones:</p>
+                            <p className='block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2'>Observaciones:</p>
                             {observaciones && observaciones.length > 0 ? (
                                 observaciones.map((obs, index) => (
                                     <div key={index}>

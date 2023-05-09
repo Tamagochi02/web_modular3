@@ -7,10 +7,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const DoceEtapa2 = ({ user }) => {
-    const [documents, setDocuments] = useState([])
     const router = useRouter()
     const { docid: documentId , id: proyectId} = router.query
-
+    const [documents, setDocuments] = useState([])
+    const [observaciones, setObservacion] = useState([])
     
 
 
@@ -48,6 +48,18 @@ const DoceEtapa2 = ({ user }) => {
             });
     }
 
+    useEffect(() => {
+        Promise.all([
+            fetch(`/api/documents/${documentId}/observaciones`).then((response) => response.json())
+        ]).then(([observacionData]) => {
+            setObservacion(observacionData)
+            console.log(observacionData);
+
+        }).catch((error) => {
+            toast("Error al obtener los datos");
+        });
+    }, [])
+
     return <Layout title='Etapa 2 - Resumen' user={user} >
         <Card>
             <form onSubmit={onSubmitCreateDoceEtapa2Form} className="flex flex-col">
@@ -63,6 +75,20 @@ const DoceEtapa2 = ({ user }) => {
                     <span className='block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2' >Herramientas</span>
                     <textarea name="herramientas" id="message" rows="" className="resize block border px-2 rounded-lg w-full h-32" placeholder="Escribe las herramientas útilizadas en tu proyecto..." ></textarea>
                 </div>
+                <div className=" pt-4 pb-2">
+                        <span className="font-semibold">
+                            <p className='block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2'>Observaciones:</p>
+                            {observaciones && observaciones.length > 0 ? (
+                                observaciones.map((obs, index) => (
+                                    <div key={index}>
+                                        {obs.observacion}
+                                    </div>
+                                ))
+                            ) : (
+                                <p>No hay observaciones</p>
+                            )}
+                        </span>
+                    </div>
 
                 <div dir="rtl">
                     <div class="relative h-32 w-32">
