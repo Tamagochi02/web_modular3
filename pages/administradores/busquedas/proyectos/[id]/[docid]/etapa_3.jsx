@@ -18,30 +18,6 @@ const DoceEtapa2 = ({ user }) => {
 
     const router = useRouter();
 
-    const onSubmitCreateProyectForm = (eventForm) => {
-        eventForm.preventDefault();
-        const data = new FormData(eventForm.target);
-
-        const payload = {
-            descripcion: data.get('descripcion'),
-            objGeneral: data.get('objGeneral'),
-            objsMetas: data.get('objsMetas'),
-            alcance: data.get('alcance'),
-            herramientas: data.get('herramientas'),
-            pdf: data.get('pdf'),
-        };
-
-        fetch('/api/projects/documents', {
-            method: 'POST',
-            body: JSON.stringify(payload),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-            .then(() => router.push('/administradores/busquedas/proyectos/'))
-            .catch((error) => console.log(error));
-    };
-
     const onFileChange = (event) => {
         const arr = [];
         if (arr.length > 0) {
@@ -71,32 +47,27 @@ const DoceEtapa2 = ({ user }) => {
     return <Layout title='Etapa 3 - Informe Final' user={user} >
         <Card>
             <form onSubmit={onFileChange} className="flex flex-col">
-                <div class="max-w-2xl mx-auto">
+                <div className='max-w-2xl mx-auto text-center'>
+                    <label
+                        className='block mb-2 text-sm font-medium text-gray-900 dark:text-black uppercase'
+                        htmlFor='file_input'
+                    >
+                        Documento:
+                    </label>
 
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-black uppercase" for="file_input">Documento:</label>
-                    <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file"
-                        accept="application/pdf"
-                        onChange={(e) => {
-                            const file = e.target.files[0];
-                            if (file && file.type !== "application/pdf") {
-                                alert("Solo se permiten archivos PDF.");
-                                e.target.value = "";
-                            }
-                        }}
-                    ></input>
+                    <button class="bg-gray-300 hover:bg-gray-500 text-gray-darkest font-bold py-2 px-4 rounded inline-flex items-center">
+                        <span className='material-icons'>picture_as_pdf</span>
+                        <span className='ml-2'>Descargar</span>
+                    </button>
 
-                    <p class="mt-5 text-center block mb-2 text-sm font-medium text-gray-900 dark:text-black uppercase">Sube tu Informe
-                        Final en
-                        formato<a class="text-red-700 "
-                            target="_blank"> pdf</a>.
+                    <p className='mt-5 text-center block mb-2 text-sm font-medium text-gray-900 dark:text-black uppercase'>
+                        Descarga el Informe Final en formato
+                        <a className='text-red-700' target='_blank'>
+                            {' '}
+                            pdf
+                        </a>
+                        .
                     </p>
-
-                    {/* <p class="mt-5 text-center block mb-2 text-sm font-medium text-gray-900 dark:text-black uppercase">Sube tu Informe
-                        Final en
-                        formato<a class="text-red-700 hover:underline"
-                            href="#" target="_blank"> pdf</a>.
-                    </p> */}
-                    
                 </div>
 
                 {/* <button type="submit" className="mt-5 bg-blue-500 text-white h-10 rounded-lg">Crear</button> */}

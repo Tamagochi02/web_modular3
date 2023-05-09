@@ -12,12 +12,15 @@ const Etapa1 = ({ user }) => {
     const { docid: documentId, id: proyectId } = router.query
     const [proyects, setProyects] = useState({})
     const [documents, setDocuments] = useState([])
+    const [observaciones, setObservacion] = useState([])
 
     useEffect(() => {
         Promise.all([
-            fetch(`/api/documents/${documentId}`).then((response) => response.json())
-        ]).then((res) => {
+            fetch(`/api/documents/${documentId}`).then((response) => response.json()),
+            fetch(`/api/documents/${documentId}/observaciones`).then((response) => response.json())
+        ]).then(([res, observacionData]) => {
             setDocuments(res[0])
+            setObservacion(observacionData)
 
         }).catch((error) => {
             toast("Error al obtener los datos");
@@ -64,6 +67,21 @@ const Etapa1 = ({ user }) => {
                         typeof documents.DocEtapa1 !== 'undefined' ?
                             documents.DocEtapa1.length > 0 ? documents.DocEtapa1[0]?.referencias : '' : '' : ''}</span>
                 </div>
+
+                <div className=" pt-4 pb-2">
+                        <span className="font-semibold">
+                            <p className='block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2'>Observaciones:</p>
+                            {observaciones && observaciones.length > 0 ? (
+                                observaciones.map((obs, index) => (
+                                    <div key={index}>
+                                        {obs.observacion}
+                                    </div>
+                                ))
+                            ) : (
+                                <p>No hay observaciones</p>
+                            )}
+                        </span>
+                    </div>
 
             </form>
         </Card>
