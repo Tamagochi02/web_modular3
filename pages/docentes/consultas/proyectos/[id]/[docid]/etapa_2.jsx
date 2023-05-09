@@ -104,10 +104,10 @@ const Etapa2 = ({ user }) => {
                     <span name="titulo" type="text" className="border px-2 rounded-lg h-10" placeholder="Título">
                         {documents && documents.DocEtapa2 && documents.DocEtapa2.length > 0 ? documents?.titulo : ''}</span>
 
-                    <span className='block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2'>Integrantes del proyecto:</span>
+                    {/* <span className='block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2'>Integrantes del proyecto:</span>
 
                     <span name="correos" id="message" rows="" className="resize block border px-2 rounded-lg w-full h-32" placeholder="Describe la desripción de tu proyecto..." >
-                        {proyects && proyects.usuarios && proyects.usuarios.map(up => <p>{up.usuario.correo}</p>)}</span>
+                        {proyects && proyects.usuarios && proyects.usuarios.map(up => <p>{up.usuario.correo}</p>)}</span> */}
 
 
 
@@ -139,6 +139,13 @@ const Etapa2 = ({ user }) => {
                 </div>
 
             </form>
+
+            {/* Boton  de visualizador de PDF */}
+
+            <br />
+            <button className="material-icons right-20"
+                onClick={() => window.location.href = `/pdf/${documentId}/resumen`}
+            >picture_as_pdf</button>
         </Card>
 
         <Card className="p-4">

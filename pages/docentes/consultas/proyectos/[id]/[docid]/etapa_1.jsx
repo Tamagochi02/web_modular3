@@ -75,7 +75,7 @@ const Etapa1 = ({ user }) => {
         setTimeout(() => {
             router.push(`/docentes/consultas/proyectos/${proyectId}`)
         }, 1000)
-       
+
     }, [documentId, proyectId, proyecto])
 
     useEffect(() => {
@@ -92,7 +92,6 @@ const Etapa1 = ({ user }) => {
         });
     }, [])
 
-
     return <Layout title='Etapa-1 Estado del arte' user={user} >
         <Card className="p-4">
             <form className="flex flex-col">
@@ -103,10 +102,10 @@ const Etapa1 = ({ user }) => {
                     <span className='block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2'>Título:</span>
                     <span name="titulo" type="text" className="border px-2 rounded-lg h-10" placeholder="Título">
                         {documents && documents.DocEtapa1 && documents.DocEtapa1.length > 0 ? documents?.titulo : ''}</span>
-                    <span className='block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2'>Integrantes:</span>
+                    {/* <span className='block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2'>Integrantes:</span>
                     <span name="resumen" id="message" rows="" className="resize block border px-2 rounded-lg w-full h-32" placeholder="Un resumen de tu proyecto..." >
                         {proyects && proyects.usuarios && proyects.usuarios.map(up => <p>{up.usuario.correo}</p>)}
-                    </span>
+                    </span> */}
 
                     <span className='block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2'>Resumen:</span>
                     <span name="resumen" id="message" rows="" className="resize block border px-2 rounded-lg w-full h-32" placeholder="Un resumen de tu proyecto..." >
@@ -146,7 +145,17 @@ const Etapa1 = ({ user }) => {
                     </span>
                 </div>
             </form>
-            <button className="material-icons">download</button>
+            {/* Boton  de visualizador de PDF */}
+
+            <br />
+            
+            <button className="material-icons right-20"
+                onClick={() => window.location.href = `/pdf/${documentId}/estado_de_arte`}
+            >
+                <span>picture_as_pdf</span> 
+                
+            </button>
+
         </Card>
 
         <Card className="p-4">
@@ -177,7 +186,7 @@ const Etapa1 = ({ user }) => {
                 <textarea
                     name="observacion"
                     id="message"
-                    rows="" 
+                    rows=""
                     className="resize block border px-2 rounded-lg w-full h-32"
                     placeholder="Las observaciones al documento..."
                     value={proyecto.observacion}
