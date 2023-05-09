@@ -5,7 +5,7 @@ import { prisma } from "../../lib/prisma";
 
 export const updateEtapa3: IronNextApiHandler = async (req, res) => {
     const { url, etapaId} = req.body
-    const user = await prisma.docEtapa3.update({
+    const etapa3 = await prisma.docEtapa3.update({
         data: {
             url
         },
@@ -13,7 +13,7 @@ export const updateEtapa3: IronNextApiHandler = async (req, res) => {
             id: etapaId
         }
     })
-    res.json(user)
+    res.json(etapa3)
 }
 
 export default withIronSessionApiRoute(updateEtapa3, ironOptions)
