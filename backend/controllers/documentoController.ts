@@ -58,13 +58,13 @@ export const CreateDocument: IronNextApiHandler = async (req, res) => {
 }
 
 export const UpdateDocument: IronNextApiHandler = async (req, res) => {
-    const { nombre, titulo, etapa } = req.body
+    const { nombre, titulo, etapa, documentoId } = req.body
     const user = await prisma.documento.update({
         data: {
             nombre, titulo, etapa
         },
         where: {
-            id: ""
+            id: documentoId
         }
     })
     res.json(user)
